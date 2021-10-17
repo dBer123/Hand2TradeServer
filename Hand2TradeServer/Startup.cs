@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Hand2TradeServerBL.Models;
+//using Hand2TradeServerBL.Models;
 
 
 
@@ -41,8 +41,8 @@ namespace Hand2TradeServer
             #region Add DB Context Support
             string connectionString = this.Configuration.GetConnectionString("Hand2TradeDB");
 
-            services.AddDbContext<Hand2TradeDBContext>(options => options
-                                                                .UseSqlServer(connectionString));
+            //services.AddDbContext<Hand2TradeDBContext>(options => options
+            //                                                    .UseSqlServer(connectionString));
             //.UseLazyLoadingProxies());
             #endregion
         }

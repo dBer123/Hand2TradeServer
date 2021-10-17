@@ -63,7 +63,7 @@ CREATE TABLE Loan(
 
 CREATE TABLE DailyRepor(
     DailyReportReportID INT IDENTITY Primary Key NOT NULL,
-    nameOfDay NVARCHAR(30) NOT NULL,
+    dateOfDay DateTime NOT NULL,
     newSubs INT NOT NULL,
     itemsTraded INT NOT NULL,
     loansTaken INT NOT NULL,
@@ -72,8 +72,8 @@ CREATE TABLE DailyRepor(
 )
 
 CREATE TABLE MonthlyReport(
-    MonthlyReportID INT IDENTITY Primary Key NOT NULL ,
-    nameOfMonth NVARCHAR(30) NOT NULL,
+    MonthlyReportID INT IDENTITY Primary Key NOT NULL,
+    dateOfMonth DateTime NOT NULL,
     newSubs INT NOT NULL,
     itemsTraded INT NOT NULL,
     loansTaken INT NOT NULL,
@@ -82,8 +82,8 @@ CREATE TABLE MonthlyReport(
 )
 
 CREATE TABLE HourlyReport(
-    HourlyReportID INT IDENTITY Primary Key NOT NULL ,
-    hourNum INT NOT NULL,
+    HourlyReportID INT IDENTITY Primary Key NOT NULL,
+    hourTime DateTime NOT NULL,
     newSubs INT NOT NULL,
     itemsDraded INT NOT NULL,
     loansTaken INT NOT NULL,
