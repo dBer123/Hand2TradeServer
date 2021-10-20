@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Hand2TradeServerBL.Models
 {
-    public partial class Hand2TradeContext : DbContext
+    public partial class Hand2TradeDBContext : DbContext
     {
-        public Hand2TradeContext()
+        public Hand2TradeDBContext()
         {
         }
 
-        public Hand2TradeContext(DbContextOptions<Hand2TradeContext> options)
+        public Hand2TradeDBContext(DbContextOptions<Hand2TradeDBContext> options)
             : base(options)
         {
         }
@@ -42,7 +42,7 @@ namespace Hand2TradeServerBL.Models
             modelBuilder.Entity<DailyRepor>(entity =>
             {
                 entity.HasKey(e => e.DailyReportReportId)
-                    .HasName("PK__DailyRep__4B598E0D312FCDFD");
+                    .HasName("PK__DailyRep__4B598E0D605C7766");
             });
 
             modelBuilder.Entity<Item>(entity =>
@@ -66,7 +66,7 @@ namespace Hand2TradeServerBL.Models
             modelBuilder.Entity<TextMessage>(entity =>
             {
                 entity.HasKey(e => e.MessageId)
-                    .HasName("PK__TextMess__4808B873CFA979DE");
+                    .HasName("PK__TextMess__4808B8738D0A7A1A");
 
                 entity.Property(e => e.TextMessage1).IsUnicode(false);
 
@@ -86,7 +86,7 @@ namespace Hand2TradeServerBL.Models
             modelBuilder.Entity<TradeChat>(entity =>
             {
                 entity.HasKey(e => e.ChatId)
-                    .HasName("PK__TradeCha__8263854D34307C06");
+                    .HasName("PK__TradeCha__8263854DC0567DB1");
 
                 entity.HasOne(d => d.Buyer)
                     .WithMany(p => p.TradeChatBuyers)

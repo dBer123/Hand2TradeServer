@@ -49,8 +49,6 @@ namespace Hand2TradeServerBL.Models
         public int TotalRank { get; set; }
         [Column("bearthDate", TypeName = "datetime")]
         public DateTime BearthDate { get; set; }
-        [Column("isInBankManagment")]
-        public bool IsInBankManagment { get; set; }
         [Required]
         [Column("adress")]
         [StringLength(255)]
@@ -59,8 +57,8 @@ namespace Hand2TradeServerBL.Models
         public int CreditCardNumber { get; set; }
         [Column("CVV")]
         public int Cvv { get; set; }
-        [Column("creditCardValidity")]
-        public int CreditCardValidity { get; set; }
+        [Column("creditCardValidity", TypeName = "datetime")]
+        public DateTime CreditCardValidity { get; set; }
         [Column("isBlocked")]
         public bool IsBlocked { get; set; }
 

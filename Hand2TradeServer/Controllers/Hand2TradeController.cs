@@ -5,44 +5,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-//using Hand2TradeServerBL.Models;
+using Hand2TradeServerBL.Models;
 using System.IO;
+
 
 namespace Hand2TradeServer.Controllers
 {
-    //[Route("Hand2TradeAPI")]
-    //[ApiController]
-    //public class Hand2TradeController : ControllerBase
-    //{
-    //    #region Add connection to the db context using dependency injection
-    //    Hand2TradeDBContext context;
-    //    public Hand2TradeController(Hand2TradeDBContext context)
-    //    {
-    //        this.context = context;
-    //    }
-    //    #endregion
-    //}
-    //[Route("Login")]
-    //[HttpGet]
-    //public User Login([FromQuery] string email, [FromQuery] string pass)
-    //{
-    //    User user = context.Login(email, pass);
+    [Route("Hand2TradeAPI")]
+    [ApiController]
+    public class Hand2TradeController : ControllerBase
+    {
+        #region Add connection to the db context using dependency injection
+        Hand2TradeDBContext context;
+        public Hand2TradeController(Hand2TradeDBContext context)
+        {
+            this.context = context;
+        }
+        #endregion
 
-    //    //Check user name and password
-    //    if (user != null)
-    //    {
-    //        HttpContext.Session.SetObject("theUser", user);
+        [Route("Login")]
+        [HttpGet]
+        public User Login([FromQuery] string email, [FromQuery] string pass)
+        {
+            User user = context.Login(email, pass);
 
-    //        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+            //Check user name and password
+            if (user != null)
+            {
+                HttpContext.Session.SetObject("theUser", user);
 
-    //        //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-    //        return user;
-    //    }
-    //    else
-    //    {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 
-    //        Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-    //        return null;
-    //    }
-    //}
+                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                return user;
+            }
+            else
+            {
+
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
+    }
+    
 }

@@ -6,7 +6,7 @@ Use Hand2TradeDB
 CREATE TABLE Users(
     userID INT  IDENTITY Primary Key NOT NULL ,
     email NVARCHAR (100) NOT NULL,
-    passwrd INT NOT NULL,
+    passwrd NVARCHAR(30) NOT NULL,
     userName NVARCHAR(30) NOT NULL,
     isAdmin Bit NOT NULL,
     coins INT NOT NULL,
@@ -15,11 +15,10 @@ CREATE TABLE Users(
     countRanked INT NOT NULL,
     totalRank INT NOT NULL,
     bearthDate DATETIME NOT NULL,
-    isInBankManagment Bit NOT NULL,
     adress NVARCHAR(255) NOT NULL,
     creditCardNumber INT NOT NULL,
     CVV INT NOT NULL, 
-    creditCardValidity INT NOT NULL,
+    creditCardValidity DATETIME NOT NULL,
     isBlocked Bit NOT NULL,
 	CONSTRAINT UC_email UNIQUE(email)
 
@@ -91,3 +90,5 @@ CREATE TABLE HourlyReport(
     reportsNum INT NOT NULL
 ) 
 
+INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, totalRank, bearthDate, adress, creditCardNumber, CVV, creditCardValidity, isBlocked)
+VALUES ('berdaniel04@gmail.com', 'daniel6839', 'danBer', '1', '0', '0', '0','0','0','2003-12-25','hailanot st. 7', '12313', '111','2023-12-25','0');
