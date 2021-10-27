@@ -17,5 +17,30 @@ namespace Hand2TradeServerBL.Models
 
             return user;
         }
+        public User AddUser(string password, string username, string email, int coins, int reports, string adress, DateTime dDay,int totalRank, bool isAdmin, bool isBlocked)
+        {
+            User active = new User();
+            active.Passwrd = password;
+            active.Coins = coins;
+            active.Email = email;
+            active.UserName = username;
+            active.Adress = adress;
+            active.Reports = reports;
+            active.BearthDate = dDay;
+            active.IsAdmin = isAdmin;
+            active.IsBlocked = isBlocked;
+
+            try
+            {
+                this.Users.Add(active);
+                this.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            return active;
+
+        }
     }
 }

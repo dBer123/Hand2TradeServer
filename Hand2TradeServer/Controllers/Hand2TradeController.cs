@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Hand2TradeServerBL.Models;
 using System.IO;
+using Hand2TradeServer.DTO;
 
 
 namespace Hand2TradeServer.Controllers
@@ -42,6 +43,25 @@ namespace Hand2TradeServer.Controllers
             else
             {
 
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
+        [Route("SignUp")]
+        [HttpPost]
+        public UserDTO SignUp([FromBody] UserDTO a)
+        {
+
+            User p =  context.AddUser();
+            if (p != null)
+            {
+                UserDTO uDTO = new UserDTO(p);
+                HttpContext.Session.SetObject("user", uDTO);
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                return uDTO;
+            }
+            else
+            {
                 Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                 return null;
             }
