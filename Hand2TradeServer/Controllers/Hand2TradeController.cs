@@ -52,7 +52,7 @@ namespace Hand2TradeServer.Controllers
         public UserDTO SignUp([FromBody] UserDTO a)
         {
 
-            User p = context.AddUser(a.Passwrd, a.UserName,a.Email,a.Coins,a.Reports,a.Adress,a.BearthDate,a.TotalRank,a.IsAdmin,a.IsBlocked);
+            User p = context.AddUser(a.Passwrd, a.UserName, a.Email, a.Coins, a.Adress, a.BirthDate, a.TotalRank, a.IsAdmin, a.IsBlocked, a.CreditNum, a.CardDate, a.CVV);
             if (p != null)
             {
                 UserDTO uDTO = new UserDTO(p);

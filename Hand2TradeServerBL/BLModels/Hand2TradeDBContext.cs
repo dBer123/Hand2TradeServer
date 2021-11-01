@@ -17,7 +17,7 @@ namespace Hand2TradeServerBL.Models
 
             return user;
         }
-        public User AddUser(string password, string username, string email, int coins, int reports, string adress, DateTime dDay,int totalRank, bool isAdmin, bool isBlocked)
+        public User AddUser(string password, string username, string email, int coins, string adress, DateTime dDay,int totalRank, bool isAdmin, bool isBlocked, int creditNum, DateTime cardDate, int cvv )
         {
             User active = new User();
             active.Passwrd = password;
@@ -25,10 +25,12 @@ namespace Hand2TradeServerBL.Models
             active.Email = email;
             active.UserName = username;
             active.Adress = adress;
-            active.Reports = reports;
             active.BearthDate = dDay;
             active.IsAdmin = isAdmin;
             active.IsBlocked = isBlocked;
+            active.CreditCardNumber = creditNum;
+            active.CreditCardValidity = cardDate;
+            active.Cvv = cvv;
 
             try
             {
