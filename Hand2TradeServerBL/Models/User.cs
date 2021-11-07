@@ -54,9 +54,11 @@ namespace Hand2TradeServerBL.Models
         [StringLength(255)]
         public string Adress { get; set; }
         [Column("creditCardNumber")]
-        public int CreditCardNumber { get; set; }
+        [StringLength(255)]
+        public string CreditCardNumber { get; set; }
         [Column("CVV")]
-        public int Cvv { get; set; }
+        [StringLength(255)]
+        public string Cvv { get; set; }
         [Column("creditCardValidity", TypeName = "datetime")]
         public DateTime CreditCardValidity { get; set; }
         [Column("isBlocked")]

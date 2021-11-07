@@ -17,8 +17,8 @@ namespace Hand2TradeServer.DTO
         public DateTime BirthDate { get; set; }
         public string Adress { get; set; }
         public bool IsBlocked { get; set; }
-        public int CreditNum { get; set; }
-        public int CVV { get; set; }
+        public string CreditNum { get; set; }
+        public string CVV { get; set; }
         public DateTime CardDate { get; set; }
 
 
@@ -39,9 +39,7 @@ namespace Hand2TradeServer.DTO
             CreditNum = u.CreditCardNumber;
             CVV = u.Cvv;
             CardDate = u.CreditCardValidity;
-
-
-        
+            
         }
 
     }

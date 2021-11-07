@@ -26,11 +26,7 @@ namespace Hand2TradeServerBL.Models
         [StringLength(30)]
         public string ItemName { get; set; }
         [Column("price")]
-        public int Price { get; set; }
-        [Required]
-        [Column("imageURL")]
-        [StringLength(255)]
-        public string ImageUrl { get; set; }
+        public int Price { get; set; }       
         [Required]
         [Column("desrciption")]
         [StringLength(255)]

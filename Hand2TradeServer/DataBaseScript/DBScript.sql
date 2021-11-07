@@ -16,8 +16,8 @@ CREATE TABLE Users(
     totalRank INT NOT NULL,
     bearthDate DATETIME NOT NULL,
     adress NVARCHAR(255) NOT NULL,
-    creditCardNumber INT NOT NULL,
-    CVV INT NOT NULL, 
+    creditCardNumber NVARCHAR(255) NOT NULL,
+    CVV NVARCHAR(255) NOT NULL, 
     creditCardValidity DATETIME NOT NULL,
     isBlocked Bit NOT NULL,
 	CONSTRAINT UC_email UNIQUE(email)
@@ -30,7 +30,6 @@ CREATE TABLE Items(
     userID INT NOT NULL FOREIGN KEY REFERENCES Users(userID),
     itemName NVARCHAR(30) NOT NULL,
     price INT NOT NULL,
-    imageURL NVARCHAR(255) NOT NULL,
     desrciption NVARCHAR(255) NOT NULL
 )
 
