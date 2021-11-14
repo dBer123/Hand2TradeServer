@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Hand2TradeServerBL.Models;
 using System.IO;
 using Hand2TradeServer.DTO;
+using Hand2TradeServer.Sevices;
 
 
 namespace Hand2TradeServer.Controllers
@@ -51,7 +52,7 @@ namespace Hand2TradeServer.Controllers
         [HttpPost]
         public UserDTO SignUp([FromBody] UserDTO a)
         {
-
+           
             User p = context.AddUser(a.Passwrd, a.UserName, a.Email, a.Coins, a.Adress, a.BirthDate, a.TotalRank, a.IsAdmin, a.IsBlocked, a.CreditNum, a.CardDate, a.CVV);
             if (p != null)
             {

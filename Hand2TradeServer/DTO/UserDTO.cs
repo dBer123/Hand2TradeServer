@@ -21,7 +21,7 @@ namespace Hand2TradeServer.DTO
         public string CVV { get; set; }
         public DateTime CardDate { get; set; }
 
-
+        public UserDTO() { }
 
 
 
