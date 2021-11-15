@@ -9,7 +9,7 @@ using Hand2TradeServerBL.Models;
 using System.IO;
 using Hand2TradeServer.DTO;
 using Hand2TradeServer.Sevices;
-
+using System.Text.RegularExpressions;
 
 namespace Hand2TradeServer.Controllers
 {
@@ -24,6 +24,8 @@ namespace Hand2TradeServer.Controllers
             this.context = context;
         }
         #endregion
+
+        protected int pass = 0;
 
         [Route("Login")]
         [HttpGet]
@@ -48,14 +50,35 @@ namespace Hand2TradeServer.Controllers
                 return null;
             }
         }
+
+        [Route("CheckEmail")]
+        [HttpGet]
+        public bool CheckEmail([FromQuery] string checkPass)
+        {
+            if (int.Parse(checkPass) == pass) return true;
+            return false;
+        }
+
+
         [Route("SignUp")]
         [HttpPost]
         public UserDTO SignUp([FromBody] UserDTO a)
         {
-           
-            User p = context.AddUser(a.Passwrd, a.UserName, a.Email, a.Coins, a.Adress, a.BirthDate, a.TotalRank, a.IsAdmin, a.IsBlocked, a.CreditNum, a.CardDate, a.CVV);
+            var cardCheck = new Regex(@"^(1298|1267|4512|4567|8901|8933)([\-\s]?[0-9]{4}){3}$");
+            User p = null;
+            if (cardCheck.IsMatch(a.Email)) p = context.AddUser(a.Passwrd, a.UserName, a.Email, a.Coins, a.Adress, a.BirthDate, a.TotalRank, a.IsAdmin, a.IsBlocked, a.CreditNum, a.CardDate, a.CVV);
             if (p != null)
             {
+                Random random = new Random();
+                pass = random.Next(10000, 100000);
+                try
+                {
+                    EmailSender.SendEmail("Validate Sign Up", $"Password-{pass}", a.Email, "New User", "berdaniel04@gmail.com", "Daniel", "daniel6839", "smtp.gmail.com");
+                }
+                catch
+                {
+
+                }
                 UserDTO uDTO = new UserDTO(p);
                 HttpContext.Session.SetObject("user", uDTO);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
@@ -68,5 +91,8 @@ namespace Hand2TradeServer.Controllers
             }
         }
     }
+
     
+
+
 }

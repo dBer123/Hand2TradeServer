@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace Hand2TradeServer.Sevices
 {
-    public class emailSendercs
+    public class EmailSender
     {
-        static void SendEmail(string subject, string body, string to, string toName, string from, string fromName, string pswd, string smtpUrl)
+        public static void SendEmail(string subject, string body, string to, string toName, string from, string fromName, string pswd, string smtpUrl)
         {
             var fromAddress = new MailAddress(from, fromName);
             var toAddress = new MailAddress(to, toName);
@@ -30,5 +33,7 @@ namespace Hand2TradeServer.Sevices
                 smtp.Send(message);
             }
         }
+
+        
     }
 }

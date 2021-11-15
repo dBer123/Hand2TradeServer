@@ -37,11 +37,18 @@ namespace Hand2TradeServerBL.Models
                 this.Users.Add(active);
                 this.SaveChanges();
             }
-            catch (Exception e)
+            catch 
             {
                 return null;
             }
             return active;
+
+        }
+
+       public void ValidatedUser(string email)
+        {
+            User user = this.Users
+                .Where(u => u.Email == email).FirstOrDefault();
 
         }
     }
