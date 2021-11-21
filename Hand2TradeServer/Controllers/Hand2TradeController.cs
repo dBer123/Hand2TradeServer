@@ -25,9 +25,9 @@ namespace Hand2TradeServer.Controllers
         }
         #endregion
 
-        protected int pass = 0;
-
-        [Route("Login")]
+        protected int pass;
+        protected string email;
+       [Route("Login")]
         [HttpGet]
         public User Login([FromQuery] string email, [FromQuery] string pass)
         {
@@ -55,7 +55,12 @@ namespace Hand2TradeServer.Controllers
         [HttpGet]
         public bool CheckEmail([FromQuery] string checkPass)
         {
-            if (int.Parse(checkPass) == pass) return true;
+            if (int.Parse(checkPass) == pass)
+            {
+                context.ValidatedEmail(email);
+                return true;
+
+            }
             return false;
         }
 
@@ -64,9 +69,11 @@ namespace Hand2TradeServer.Controllers
         [HttpPost]
         public UserDTO SignUp([FromBody] UserDTO a)
         {
-            var cardCheck = new Regex(@"^(1298|1267|4512|4567|8901|8933)([\-\s]?[0-9]{4}){3}$");
+            //var cardCheck = new Regex(@"^(1298|1267|4512|4567|8901|8933)([\-\s]?[0-9]{4}){3}$");
             User p = null;
-            if (cardCheck.IsMatch(a.Email)) p = context.AddUser(a.Passwrd, a.UserName, a.Email, a.Coins, a.Adress, a.BirthDate, a.TotalRank, a.IsAdmin, a.IsBlocked, a.CreditNum, a.CardDate, a.CVV);
+            email =a.Email;
+            //if (cardCheck.IsMatch(a.CreditNum)) 
+                p = context.AddUser(a.Passwrd, a.UserName, a.Email, a.Coins, a.Adress, a.BirthDate, a.TotalRank, a.IsAdmin, a.IsBlocked, a.CreditNum, a.CardDate, a.CVV);
             if (p != null)
             {
                 Random random = new Random();

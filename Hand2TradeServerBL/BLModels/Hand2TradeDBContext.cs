@@ -45,10 +45,17 @@ namespace Hand2TradeServerBL.Models
 
         }
 
-       public void ValidatedUser(string email)
+       public void ValidatedEmail(string email)
         {
             User user = this.Users
-                .Where(u => u.Email == email).FirstOrDefault();
+               .Where(u => u.Email == email).FirstOrDefault();
+            if (user != null)
+            {
+                user.IsBlocked = false;
+
+                this.SaveChanges();
+            }
+
 
         }
     }
