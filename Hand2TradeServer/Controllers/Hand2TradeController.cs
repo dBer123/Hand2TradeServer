@@ -25,8 +25,7 @@ namespace Hand2TradeServer.Controllers
         }
         #endregion
 
-        protected int pass;
-        protected string email;
+       
        [Route("Login")]
         [HttpGet]
         public User Login([FromQuery] string email, [FromQuery] string pass)
@@ -55,9 +54,11 @@ namespace Hand2TradeServer.Controllers
         [HttpGet]
         public bool CheckEmail([FromQuery] string checkPass)
         {
-            if (int.Parse(checkPass) == pass)
+            UserDTO user = HttpContext.Session.GetObject<UserDTO>("user");
+            string pass = HttpContext.Session.GetObject<string>("EmailValidation");
+            if (checkPass == pass)
             {
-                context.ValidatedEmail(email);
+                context.ValidatedEmail(user.Email);
                 return true;
 
             }
@@ -69,18 +70,20 @@ namespace Hand2TradeServer.Controllers
         [HttpPost]
         public UserDTO SignUp([FromBody] UserDTO a)
         {
-            //var cardCheck = new Regex(@"^(1298|1267|4512|4567|8901|8933)([\-\s]?[0-9]{4}){3}$");
             User p = null;
-            email =a.Email;
-            //if (cardCheck.IsMatch(a.CreditNum)) 
+            if (IsValidCard(a.CreditNum))
+            {
                 p = context.AddUser(a.Passwrd, a.UserName, a.Email, a.Coins, a.Adress, a.BirthDate, a.TotalRank, a.IsAdmin, a.IsBlocked, a.CreditNum, a.CardDate, a.CVV);
+
+            }
             if (p != null)
             {
+                //Create temporary code for email validation
                 Random random = new Random();
-                pass = random.Next(10000, 100000);
+                int pass = random.Next(10000, 100000);
                 try
                 {
-                    EmailSender.SendEmail("Validate Sign Up", $"Password-{pass}", a.Email, "New User", "berdaniel04@gmail.com", "Daniel", "daniel6839", "smtp.gmail.com");
+                    EmailSender.SendEmail("Validate Sign Up", $"Validation email code-{pass}", a.Email, "New User", "hand2trade1@gmail.com", "hand2trade", "daniel6839", "smtp.gmail.com");
                 }
                 catch
                 {
@@ -88,6 +91,7 @@ namespace Hand2TradeServer.Controllers
                 }
                 UserDTO uDTO = new UserDTO(p);
                 HttpContext.Session.SetObject("user", uDTO);
+                HttpContext.Session.SetObject("EmailValidation", pass.ToString());
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                 return uDTO;
             }
@@ -96,6 +100,19 @@ namespace Hand2TradeServer.Controllers
                 Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                 return null;
             }
+        }
+
+        public bool IsValidCard(string txtCardNumber)
+        {
+            if (txtCardNumber.StartsWith("1298") ||
+                txtCardNumber.StartsWith("1267") ||
+                txtCardNumber.StartsWith("4512") ||
+                txtCardNumber.StartsWith("4567") ||
+                txtCardNumber.StartsWith("8901") ||
+                txtCardNumber.StartsWith("5326") ||
+                txtCardNumber.StartsWith("8933")) return true;
+
+            return false;
         }
     }
 
