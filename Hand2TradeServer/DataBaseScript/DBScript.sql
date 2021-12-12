@@ -13,7 +13,6 @@ CREATE TABLE Users(
     reports INT NOT NULL,
     sumRanks INT NOT NULL,
     countRanked INT NOT NULL,
-    totalRank INT NOT NULL,
     bearthDate DATETIME NOT NULL,
     adress NVARCHAR(255) NOT NULL,
     creditCardNumber NVARCHAR(255) NOT NULL,

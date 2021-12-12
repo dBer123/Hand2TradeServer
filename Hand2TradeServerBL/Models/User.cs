@@ -45,8 +45,6 @@ namespace Hand2TradeServerBL.Models
         public int SumRanks { get; set; }
         [Column("countRanked")]
         public int CountRanked { get; set; }
-        [Column("totalRank")]
-        public int TotalRank { get; set; }
         [Column("bearthDate", TypeName = "datetime")]
         public DateTime BearthDate { get; set; }
         [Required]

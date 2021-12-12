@@ -13,13 +13,14 @@ namespace Hand2TradeServer.DTO
         public string UserName { get; set; }
         public bool IsAdmin { get; set; }
         public int Coins { get; set; }
-        public int TotalRank { get; set; }
         public DateTime BirthDate { get; set; }
         public string Adress { get; set; }
         public bool IsBlocked { get; set; }
         public string CreditNum { get; set; }
         public string CVV { get; set; }
         public DateTime CardDate { get; set; }
+        public int SumRanks { get; set; }
+        public int CountRanked { get; set; }
 
         public UserDTO() { }
 
@@ -32,13 +33,14 @@ namespace Hand2TradeServer.DTO
             UserName = u.UserName;
             IsAdmin = u.IsAdmin;
             Coins = u.Coins;
-            TotalRank = u.TotalRank;
             BirthDate = u.BearthDate;
             Adress = u.Adress;
             IsBlocked = u.IsBlocked;
             CreditNum = u.CreditCardNumber;
             CVV = u.Cvv;
             CardDate = u.CreditCardValidity;
+            SumRanks = u.SumRanks;
+            CountRanked = u.CountRanked;
             
         }
 
