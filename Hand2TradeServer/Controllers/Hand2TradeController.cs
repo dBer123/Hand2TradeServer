@@ -73,7 +73,7 @@ namespace Hand2TradeServer.Controllers
             User p = null;
             if (IsValidCard(a.CreditNum))
             {
-                p = context.AddUser(a.Passwrd, a.UserName, a.Email, a.Coins, a.Adress, a.BirthDate, a.TotalRank, a.IsAdmin, a.IsBlocked, a.CreditNum, a.CardDate, a.CVV);
+                p = context.AddUser(a.Passwrd, a.UserName, a.Email, a.Coins, a.Adress, a.BirthDate, a.IsAdmin, a.IsBlocked, a.CreditNum, a.CardDate, a.CVV);
 
             }
             if (p != null)

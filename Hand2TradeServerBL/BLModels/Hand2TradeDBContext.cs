@@ -17,7 +17,7 @@ namespace Hand2TradeServerBL.Models
 
             return user;
         }
-        public User AddUser(string password, string username, string email, int coins, string adress, DateTime dDay,int totalRank, bool isAdmin, bool isBlocked, string creditNum, DateTime cardDate, string cvv )
+        public User AddUser(string password, string username, string email, int coins, string adress, DateTime dDay, bool isAdmin, bool isBlocked, string creditNum, DateTime cardDate, string cvv )
         {
             User active = new User();
             active.Passwrd = password;
