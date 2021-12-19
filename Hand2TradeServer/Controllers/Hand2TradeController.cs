@@ -114,9 +114,24 @@ namespace Hand2TradeServer.Controllers
 
             return false;
         }
+
+        [Route("AddItem")]
+        [HttpPost]
+        public ItemDTO AddItem([FromBody] ItemDTO itm)
+        {
+            Item item = context.AddItem(itm.Price, itm.Desrciption);
+            if(item != null)
+            {
+                ItemDTO itemDTO = new ItemDTO(item);
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                return itemDTO;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
     }
-
-    
-
 
 }
