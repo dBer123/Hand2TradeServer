@@ -45,9 +45,19 @@ namespace Hand2TradeServerBL.Models
 
         }
 
-       public Item AddItem(int price, string description)
+       public Item AddItem(int itemId ,int price, string description, string name, User user)
         {
-            Item item = new Item();
+            Item item = new Item
+            {
+                Desrciption = description,
+                Price = price,
+                ItemId = itemId,
+                UserId = user.UserId,
+                ItemName = name
+            };
+            User user1 = this.Users
+               .Where(u => u.UserId == user.UserId).FirstOrDefault();
+            user1.Items.Add(item);
             return item;
         }
        public void ValidatedEmail(string email)

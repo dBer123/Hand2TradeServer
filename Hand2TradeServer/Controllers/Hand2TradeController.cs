@@ -114,23 +114,67 @@ namespace Hand2TradeServer.Controllers
 
             return false;
         }
-
+      
         [Route("AddItem")]
         [HttpPost]
         public ItemDTO AddItem([FromBody] ItemDTO itm)
         {
-            Item item = context.AddItem(itm.Price, itm.Desrciption);
-            if(item != null)
+            if(itm != null)
             {
-                ItemDTO itemDTO = new ItemDTO(item);
-                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                return itemDTO;
+                User user = HttpContext.Session.GetObject<User>("theUser");
+                Item item = context.AddItem(user.UserId, itm.Price, itm.Desrciption, itm.ItemName, user);
+                if (item != null)
+                {
+                    ItemDTO itemDTO = new ItemDTO(item);
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    return itemDTO;
+                }
+                else
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                    return null;
+                }
             }
             else
             {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
                 return null;
             }
+            
+        }
+
+        [Route("UploadImage")]
+        [HttpPost]
+
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the contact user ID
+            if (user != null)
+            {
+                if (file == null)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", file.FileName);
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+
+                    return Ok(new { length = file.Length, name = file.FileName });
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return BadRequest();
+                }
+            }
+            return Forbid();
         }
     }
 
