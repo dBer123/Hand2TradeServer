@@ -122,7 +122,7 @@ namespace Hand2TradeServer.Controllers
             if(itm != null)
             {
                 User user = HttpContext.Session.GetObject<User>("theUser");
-                Item item = context.AddItem(user.UserId, itm.Price, itm.Desrciption, itm.ItemName, user);
+                Item item = context.AddItem(itm.Price, itm.Desrciption, itm.ItemName, user);
                 if (item != null)
                 {
                     ItemDTO itemDTO = new ItemDTO(item);
