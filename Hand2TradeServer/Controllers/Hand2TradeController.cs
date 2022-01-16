@@ -28,7 +28,7 @@ namespace Hand2TradeServer.Controllers
        
        [Route("Login")]
         [HttpGet]
-        public User Login([FromQuery] string email, [FromQuery] string pass)
+        public UserDTO Login([FromQuery] string email, [FromQuery] string pass)
         {
             User user = context.Login(email, pass);
 
@@ -40,7 +40,8 @@ namespace Hand2TradeServer.Controllers
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 
                 //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                return user;
+                UserDTO u = new UserDTO(user);
+                return u;
             }
             else
             {
