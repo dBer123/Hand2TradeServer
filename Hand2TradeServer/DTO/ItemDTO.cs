@@ -21,6 +21,8 @@ namespace Hand2TradeServer.DTO
         {
             Price = i.Price;
             Desrciption = i.Desrciption;
+            ItemName = i.ItemName;
+            ItemId = i.ItemId;
         }
     }
 }

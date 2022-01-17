@@ -13,7 +13,8 @@ namespace Hand2TradeServerBL.Models
         public User Login(string email, string pswd)
         {
             User user = this.Users
-                .Where(u => u.Email == email && u.Passwrd == pswd).FirstOrDefault();
+                .Where(u => u.Email == email && u.Passwrd == pswd)
+                .Include(u => u.Items).FirstOrDefault();
 
             return user;
         }
