@@ -8,6 +8,7 @@ namespace Hand2TradeServer.DTO
 {
     public class UserDTO
     {
+        public int UserId { get; set; }
         public string Email { get; set; }
         public string Passwrd { get; set; }
         public string UserName { get; set; }
@@ -29,6 +30,7 @@ namespace Hand2TradeServer.DTO
 
         public UserDTO(User u)
         {
+            UserId = u.UserId;
             Email = u.Email;
             Passwrd = u.Passwrd;
             UserName = u.UserName;

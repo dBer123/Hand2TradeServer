@@ -82,8 +82,17 @@ namespace Hand2TradeServerBL.Models
 
                 this.SaveChanges();
             }
+        }
 
-
+        public User UpdateUser(string address, string pass, string userName, int id)
+        {
+            User user = this.Users
+                  .Where(u => u.UserId == id).FirstOrDefault();
+            user.Passwrd = pass;
+            user.Adress = address;
+            user.UserName = userName;
+            this.SaveChanges();
+            return user;
         }
     }
 }

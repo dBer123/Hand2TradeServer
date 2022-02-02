@@ -25,8 +25,8 @@ namespace Hand2TradeServer.Controllers
         }
         #endregion
 
-       
-       [Route("Login")]
+
+        [Route("Login")]
         [HttpGet]
         public UserDTO Login([FromQuery] string email, [FromQuery] string pass)
         {
@@ -115,12 +115,12 @@ namespace Hand2TradeServer.Controllers
 
             return false;
         }
-      
+
         [Route("AddItem")]
         [HttpPost]
         public ItemDTO AddItem([FromBody] ItemDTO itm)
         {
-            if(itm != null)
+            if (itm != null)
             {
                 User user = HttpContext.Session.GetObject<User>("theUser");
                 Item item = context.AddItem(itm.Price, itm.Desrciption, itm.ItemName, user);
@@ -141,7 +141,7 @@ namespace Hand2TradeServer.Controllers
                 Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
                 return null;
             }
-            
+
         }
 
         [Route("UploadImage")]
@@ -176,6 +176,36 @@ namespace Hand2TradeServer.Controllers
                 }
             }
             return Forbid();
+        }
+
+        [Route("UpdateUser")]
+        [HttpPost]
+        public UserDTO UpdateContact([FromBody] UserDTO userDTO)
+        {
+            //If contact is null the request is bad
+            if (userDTO == null)
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
+                return null;
+            }
+
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null && user.UserId == userDTO.UserId)
+            {
+
+                //update user to the DB by marking all entities that should be modified or added
+                User updated = context.UpdateUser(userDTO.Adress, userDTO.Passwrd, userDTO.UserName, userDTO.UserId);
+                HttpContext.Session.SetObject("theUser", user);
+                //return the contact with its new ID if that was a new userDTO
+                UserDTO u = new UserDTO(updated);
+                return u;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
         }
     }
 
