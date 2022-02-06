@@ -91,6 +91,7 @@ namespace Hand2TradeServerBL.Models
             user.Passwrd = pass;
             user.Adress = address;
             user.UserName = userName;
+    
             this.SaveChanges();
             return user;
         }
