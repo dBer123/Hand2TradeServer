@@ -25,7 +25,7 @@ namespace Hand2TradeServer.DTO
         public virtual ICollection<Item> Items { get; set; }
 
         public UserDTO() { }
-
+        
 
 
         public UserDTO(User u)

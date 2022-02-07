@@ -87,7 +87,7 @@ namespace Hand2TradeServerBL.Models
         public User UpdateUser(string address, string pass, string userName, int id)
         {
             User user = this.Users
-                  .Where(u => u.UserId == id).FirstOrDefault();
+                  .Where(u => u.UserId == id).Include(u => u.Items).FirstOrDefault();
             user.Passwrd = pass;
             user.Adress = address;
             user.UserName = userName;
