@@ -207,6 +207,28 @@ namespace Hand2TradeServer.Controllers
                 return null;
             }
         }
+        [Route("UpdateItem")]
+        [HttpPost]
+        public ItemDTO UpdateContact([FromBody] ItemDTO itemDTO)
+        {
+           
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null)
+            {
+
+                //update user to the DB by marking all entities that should be modified or added
+                Item updated = context.UpdateItem(itemDTO.Desrciption, itemDTO.Price, itemDTO.ItemName, itemDTO.ItemId);
+                //return the contact with its new ID if that was a new userDTO
+                ItemDTO i = new ItemDTO(updated);
+                return i;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
     }
 
 }

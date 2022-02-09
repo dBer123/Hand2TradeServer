@@ -95,5 +95,16 @@ namespace Hand2TradeServerBL.Models
             this.SaveChanges();
             return user;
         }
+        public Item UpdateItem(string desc, int price, string itemName, int id)
+        {
+            Item item = this.Items
+                  .Where(i => i.ItemId == id).FirstOrDefault();
+            item.Price = price;
+            item.Desrciption = desc;
+            item.ItemName = itemName;
+
+            this.SaveChanges();
+            return item;
+        }
     }
 }
