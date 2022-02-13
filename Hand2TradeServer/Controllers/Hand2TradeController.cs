@@ -229,6 +229,24 @@ namespace Hand2TradeServer.Controllers
                 return null;
             }
         }
+        [Route("DeleteItem")]
+        [HttpGet]
+        public bool DeleteItem([FromBody] int id)
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null)
+            {
+
+                bool isDeleted = context.DeleteItem(id);
+                return isDeleted;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
     }
 
 }

@@ -106,5 +106,21 @@ namespace Hand2TradeServerBL.Models
             this.SaveChanges();
             return item;
         }
+        public bool DeleteItem(int id)
+        {
+            try
+            {
+                Item item = this.Items
+                            .Where(i => i.ItemId == id).FirstOrDefault();
+                Items.Remove(item);
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
     }
 }
