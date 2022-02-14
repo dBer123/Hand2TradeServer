@@ -231,7 +231,7 @@ namespace Hand2TradeServer.Controllers
         }
         [Route("DeleteItem")]
         [HttpGet]
-        public bool DeleteItem([FromBody] int id)
+        public bool DeleteItem([FromQuery] int id)
         {
             User user = HttpContext.Session.GetObject<User>("theUser");
             //Check if user logged in and its ID is the same as the userDTO user ID
@@ -247,6 +247,25 @@ namespace Hand2TradeServer.Controllers
                 return false;
             }
         }
+
+        [Route("Search")]
+        [HttpGet]
+        public IEnumerable<Item> Search([FromQuery] int sortBy)
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null)
+            {
+
+               
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
+       
     }
 
 }
