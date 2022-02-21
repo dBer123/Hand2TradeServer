@@ -90,3 +90,5 @@ CREATE TABLE HourlyReport(
 
 INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, creditCardNumber, CVV, creditCardValidity, isBlocked)
 VALUES ('berdaniel04@gmail.com', 'daniel6839', 'danBer', '1', '0', '0', '0','0','2003-12-25','hailanot st. 7', '12313', '111','2023-12-25','0');
+INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, creditCardNumber, CVV, creditCardValidity, isBlocked)
+VALUES ('danielbe4@ramon.edum.org.il', 'daniel6839', 'danBer2', '1', '0', '0', '0','0','2003-12-25','hailanot st. 7', '12313', '111','2023-12-25','0');

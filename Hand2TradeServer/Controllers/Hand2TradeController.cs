@@ -250,14 +250,14 @@ namespace Hand2TradeServer.Controllers
 
         [Route("Search")]
         [HttpGet]
-        public IEnumerable<Item> Search([FromQuery] int sortBy)
+        public IEnumerable<Item> Search([FromQuery] string ItemName)
         {
             User user = HttpContext.Session.GetObject<User>("theUser");
             //Check if user logged in and its ID is the same as the userDTO user ID
             if (user != null)
             {
+                return context.Search(ItemName, user.UserId);
 
-               
             }
             else
             {
@@ -265,7 +265,7 @@ namespace Hand2TradeServer.Controllers
                 return null;
             }
         }
-       
+
     }
 
 }

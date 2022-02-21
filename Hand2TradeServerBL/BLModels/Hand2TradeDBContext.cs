@@ -122,5 +122,20 @@ namespace Hand2TradeServerBL.Models
                 return false;
             }
         }
+        public IEnumerable<Item> Search(string itemName, int userid)
+        {
+            try
+            {
+                IEnumerable<Item> itemsByName = this.Items
+                            .Where(i => i.ItemName.Contains(itemName) && i.UserId != userid);
+                return itemsByName;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+
+        }
     }
 }
