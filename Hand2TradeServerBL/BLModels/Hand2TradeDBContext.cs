@@ -127,7 +127,7 @@ namespace Hand2TradeServerBL.Models
             try
             {
                 IEnumerable<Item> itemsByName = this.Items
-                            .Where(i => i.ItemName.Contains(itemName) && i.UserId != userid);
+                            .Where(i => i.ItemName.Contains(itemName) && i.UserId != userid).Include(i => i.User);
                 return itemsByName;
             }
             catch (Exception e)
