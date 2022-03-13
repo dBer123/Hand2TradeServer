@@ -266,6 +266,30 @@ namespace Hand2TradeServer.Controllers
             }
         }
 
+        [Route("Search")]
+        [HttpGet]
+        public IEnumerable<UserDTO> SearchUser([FromQuery] string UserName)
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null)
+            {
+                IEnumerable<User> users = context.SearchUser(UserName, user.UserId);
+                List<UserDTO> users1 = new List<UserDTO>();
+                foreach (User ezer in users)
+                {
+                    users1.Add(new UserDTO(ezer));
+                }
+                IEnumerable<UserDTO> users2 = new List<UserDTO>(users1);
+                return users2;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
+
     }
 
 }

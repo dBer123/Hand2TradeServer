@@ -135,6 +135,20 @@ namespace Hand2TradeServerBL.Models
                 Console.WriteLine(e);
                 return null;
             }
+        }
+        public IEnumerable<User> SearchUser(string userName, int userid)
+        {
+            try
+            {
+                IEnumerable<User> usersByName = this.Users
+                            .Where(u => u.UserName.Contains(userName) && u.UserId != userid).Include(u => u.Items);
+                return usersByName;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
 
         }
     }
