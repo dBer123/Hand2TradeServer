@@ -266,7 +266,7 @@ namespace Hand2TradeServer.Controllers
             }
         }
 
-        [Route("Search")]
+        [Route("SearchAcount")]
         [HttpGet]
         public IEnumerable<UserDTO> SearchUser([FromQuery] string UserName)
         {
