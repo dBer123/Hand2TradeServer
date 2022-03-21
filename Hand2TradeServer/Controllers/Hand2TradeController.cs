@@ -290,6 +290,41 @@ namespace Hand2TradeServer.Controllers
             }
         }
 
+        [Route("Promote")]
+        [HttpGet]
+        public bool Promote([FromQuery] int userId)
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null)
+            {
+                return context.Promote(userId);
+
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+        [Route("Block")]
+        [HttpGet]
+        public bool Block([FromQuery] int userId)
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null)
+            {
+                return context.Promote(userId);
+
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+
     }
 
 }

@@ -149,7 +149,46 @@ namespace Hand2TradeServerBL.Models
                 Console.WriteLine(e);
                 return null;
             }
+        }
 
+        public bool Promote(int userid)
+        {
+            try
+            {
+                User user = this.Users
+               .Where(u => u.UserId == userid)
+               .FirstOrDefault();
+                user.IsAdmin = true;
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+        public bool Block(int userid)
+        {
+            try
+            {
+               
+                User user = this.Users
+               .Where(u => u.UserId == userid).Include(u => u.Items)
+               .FirstOrDefault();
+                user.IsBlocked = true;
+                foreach (Item item in user.Items)
+                {
+                    Items.Remove(item);
+                }
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
     }
 }
