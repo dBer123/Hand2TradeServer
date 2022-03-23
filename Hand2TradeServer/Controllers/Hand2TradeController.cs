@@ -315,7 +315,7 @@ namespace Hand2TradeServer.Controllers
             //Check if user logged in and its ID is the same as the userDTO user ID
             if (user != null)
             {
-                return context.Promote(userId);
+                return context.Block(userId);
 
             }
             else
