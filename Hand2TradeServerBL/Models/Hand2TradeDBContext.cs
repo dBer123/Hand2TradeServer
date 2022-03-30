@@ -22,6 +22,8 @@ namespace Hand2TradeServerBL.Models
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Loan> Loans { get; set; }
         public virtual DbSet<MonthlyReport> MonthlyReports { get; set; }
+        public virtual DbSet<Rating> Ratings { get; set; }
+        public virtual DbSet<Report> Reports { get; set; }
         public virtual DbSet<TextMessage> TextMessages { get; set; }
         public virtual DbSet<TradeChat> TradeChats { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -42,7 +44,7 @@ namespace Hand2TradeServerBL.Models
             modelBuilder.Entity<DailyRepor>(entity =>
             {
                 entity.HasKey(e => e.DailyReportReportId)
-                    .HasName("PK__DailyRep__4B598E0D605C7766");
+                    .HasName("PK__DailyRep__1CAD8966B5FA78CE");
             });
 
             modelBuilder.Entity<Item>(entity =>
@@ -60,13 +62,43 @@ namespace Hand2TradeServerBL.Models
                     .WithMany(p => p.Loans)
                     .HasForeignKey(d => d.LoanerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Loan__loanerID__44FF419A");
+                    .HasConstraintName("FK__Loans__loanerID__44FF419A");
+            });
+
+            modelBuilder.Entity<Rating>(entity =>
+            {
+                entity.HasOne(d => d.RatedUser)
+                    .WithMany(p => p.RatingRatedUsers)
+                    .HasForeignKey(d => d.RatedUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Ratings__ratedUs__5165187F");
+
+                entity.HasOne(d => d.Sender)
+                    .WithMany(p => p.RatingSenders)
+                    .HasForeignKey(d => d.SenderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Ratings__senderI__52593CB8");
+            });
+
+            modelBuilder.Entity<Report>(entity =>
+            {
+                entity.HasOne(d => d.ReportedUser)
+                    .WithMany(p => p.ReportReportedUsers)
+                    .HasForeignKey(d => d.ReportedUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Reports__reporte__4D94879B");
+
+                entity.HasOne(d => d.Sender)
+                    .WithMany(p => p.ReportSenders)
+                    .HasForeignKey(d => d.SenderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Reports__senderI__4E88ABD4");
             });
 
             modelBuilder.Entity<TextMessage>(entity =>
             {
                 entity.HasKey(e => e.MessageId)
-                    .HasName("PK__TextMess__4808B8738D0A7A1A");
+                    .HasName("PK__TextMess__4808B8735201CCE1");
 
                 entity.Property(e => e.TextMessage1).IsUnicode(false);
 
@@ -86,7 +118,7 @@ namespace Hand2TradeServerBL.Models
             modelBuilder.Entity<TradeChat>(entity =>
             {
                 entity.HasKey(e => e.ChatId)
-                    .HasName("PK__TradeCha__8263854DC0567DB1");
+                    .HasName("PK__TradeCha__8263854DC10FF3DE");
 
                 entity.HasOne(d => d.Buyer)
                     .WithMany(p => p.TradeChatBuyers)

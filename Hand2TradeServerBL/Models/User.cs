@@ -15,6 +15,10 @@ namespace Hand2TradeServerBL.Models
         {
             Items = new HashSet<Item>();
             Loans = new HashSet<Loan>();
+            RatingRatedUsers = new HashSet<Rating>();
+            RatingSenders = new HashSet<Rating>();
+            ReportReportedUsers = new HashSet<Report>();
+            ReportSenders = new HashSet<Report>();
             TextMessages = new HashSet<TextMessage>();
             TradeChatBuyers = new HashSet<TradeChat>();
             TradeChatSellers = new HashSet<TradeChat>();
@@ -51,9 +55,11 @@ namespace Hand2TradeServerBL.Models
         [Column("adress")]
         [StringLength(255)]
         public string Adress { get; set; }
+        [Required]
         [Column("creditCardNumber")]
         [StringLength(255)]
         public string CreditCardNumber { get; set; }
+        [Required]
         [Column("CVV")]
         [StringLength(255)]
         public string Cvv { get; set; }
@@ -61,11 +67,21 @@ namespace Hand2TradeServerBL.Models
         public DateTime CreditCardValidity { get; set; }
         [Column("isBlocked")]
         public bool IsBlocked { get; set; }
+        [Column("joinedDate", TypeName = "datetime")]
+        public DateTime JoinedDate { get; set; }
 
         [InverseProperty(nameof(Item.User))]
         public virtual ICollection<Item> Items { get; set; }
         [InverseProperty(nameof(Loan.Loaner))]
         public virtual ICollection<Loan> Loans { get; set; }
+        [InverseProperty(nameof(Rating.RatedUser))]
+        public virtual ICollection<Rating> RatingRatedUsers { get; set; }
+        [InverseProperty(nameof(Rating.Sender))]
+        public virtual ICollection<Rating> RatingSenders { get; set; }
+        [InverseProperty(nameof(Report.ReportedUser))]
+        public virtual ICollection<Report> ReportReportedUsers { get; set; }
+        [InverseProperty(nameof(Report.Sender))]
+        public virtual ICollection<Report> ReportSenders { get; set; }
         [InverseProperty(nameof(TextMessage.Sender))]
         public virtual ICollection<TextMessage> TextMessages { get; set; }
         [InverseProperty(nameof(TradeChat.Buyer))]

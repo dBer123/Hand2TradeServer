@@ -22,6 +22,7 @@ namespace Hand2TradeServer.DTO
         public DateTime CardDate { get; set; }
         public int SumRanks { get; set; }
         public int CountRanked { get; set; }
+        public DateTime JoinedDate { get; set; }
         public virtual ICollection<Item> Items { get; set; }
 
         public UserDTO() { }
@@ -45,6 +46,7 @@ namespace Hand2TradeServer.DTO
             SumRanks = u.SumRanks;
             CountRanked = u.CountRanked;
             Items = u.Items;
+            JoinedDate = u.JoinedDate;
         }
 
     }

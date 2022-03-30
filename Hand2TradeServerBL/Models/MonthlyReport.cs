@@ -8,11 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hand2TradeServerBL.Models
 {
-    [Table("MonthlyReport")]
     public partial class MonthlyReport
     {
         [Key]
-        [Column("MonthlyReportID")]
+        [Column("monthlyReportID")]
         public int MonthlyReportId { get; set; }
         [Column("dateOfMonth", TypeName = "datetime")]
         public DateTime DateOfMonth { get; set; }

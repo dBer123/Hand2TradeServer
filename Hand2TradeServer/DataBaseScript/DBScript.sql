@@ -19,6 +19,7 @@ CREATE TABLE Users(
     CVV NVARCHAR(255) NOT NULL, 
     creditCardValidity DATETIME NOT NULL,
     isBlocked Bit NOT NULL,
+	joinedDate DATETIME NOT NULL,
 	CONSTRAINT UC_email UNIQUE(email)
 
 ) 
@@ -33,7 +34,7 @@ CREATE TABLE Items(
 )
 
 
-CREATE TABLE TradeChat(
+CREATE TABLE TradeChats(
     chatID INT IDENTITY Primary Key NOT NULL ,
     itemID INT NOT NULL FOREIGN KEY REFERENCES Items(itemID),
     buyerID INT NOT NULL FOREIGN KEY REFERENCES Users(userID),
@@ -41,16 +42,17 @@ CREATE TABLE TradeChat(
     isTradeAgreed Bit NOT NULL
 ) 
 
-CREATE TABLE TextMessage(
+CREATE TABLE TextMessages(
     messageID INT IDENTITY Primary Key NOT NULL,
-    chatID INT NOT NULL FOREIGN KEY REFERENCES Items(itemID),
+    chatID INT NOT NULL FOREIGN KEY REFERENCES TradeChats(chatID),
     senderID INT NOT NULL FOREIGN KEY REFERENCES Users(userID),
-    textMessage VARCHAR(255) NOT NULL
+    textMessage VARCHAR(255) NOT NULL,
+	sentTime DATETIME NOT NULL
 ) 
 
 
-CREATE TABLE Loan(
-    LoanID INT IDENTITY Primary Key NOT NULL,
+CREATE TABLE Loans(
+    loanID INT IDENTITY Primary Key NOT NULL,
     loanerID INT NOT NULL FOREIGN KEY REFERENCES Users(userID),
     coinsLoaned INT NOT NULL,
     debt INT NOT NULL,
@@ -58,8 +60,8 @@ CREATE TABLE Loan(
     paymentDate DATETIME NOT NULL
 ) 
 
-CREATE TABLE DailyRepor(
-    DailyReportReportID INT IDENTITY Primary Key NOT NULL,
+CREATE TABLE DailyRepors(
+    dailyReportReportID INT IDENTITY Primary Key NOT NULL,
     dateOfDay DateTime NOT NULL,
     newSubs INT NOT NULL,
     itemsTraded INT NOT NULL,
@@ -68,8 +70,8 @@ CREATE TABLE DailyRepor(
     reportsNum INT NOT NULL
 )
 
-CREATE TABLE MonthlyReport(
-    MonthlyReportID INT IDENTITY Primary Key NOT NULL,
+CREATE TABLE MonthlyReports(
+    monthlyReportID INT IDENTITY Primary Key NOT NULL,
     dateOfMonth DateTime NOT NULL,
     newSubs INT NOT NULL,
     itemsTraded INT NOT NULL,
@@ -78,8 +80,8 @@ CREATE TABLE MonthlyReport(
     reportsNum INT NOT NULL
 )
 
-CREATE TABLE HourlyReport(
-    HourlyReportID INT IDENTITY Primary Key NOT NULL,
+CREATE TABLE HourlyReports(
+    hourlyReportID INT IDENTITY Primary Key NOT NULL,
     hourTime DateTime NOT NULL,
     newSubs INT NOT NULL,
     itemsDraded INT NOT NULL,
@@ -88,7 +90,20 @@ CREATE TABLE HourlyReport(
     reportsNum INT NOT NULL
 ) 
 
-INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, creditCardNumber, CVV, creditCardValidity, isBlocked)
-VALUES ('berdaniel04@gmail.com', 'daniel6839', 'danBer', '1', '0', '0', '0','0','2003-12-25','hailanot st. 7', '12313', '111','2023-12-25','0');
-INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, creditCardNumber, CVV, creditCardValidity, isBlocked)
-VALUES ('danielbe4@ramon.edum.org.il', 'daniel6839', 'danBer2', '1', '0', '0', '0','0','2003-12-25','hailanot st. 7', '12313', '111','2023-12-25','0');
+CREATE TABLE Reports(
+    reportID INT IDENTITY Primary Key NOT NULL,
+	reportedUserID INT NOT NULL FOREIGN KEY REFERENCES Users(userID),
+	senderID INT NOT NULL FOREIGN KEY REFERENCES Users(userID)
+)
+
+CREATE TABLE Ratings(
+    ratingID INT IDENTITY Primary Key NOT NULL,
+	ratedUserID INT NOT NULL FOREIGN KEY REFERENCES Users(userID),
+	senderID INT NOT NULL FOREIGN KEY REFERENCES Users(userID),
+	rate FLOAT NOT NULL
+)
+
+INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, creditCardNumber, CVV, creditCardValidity, isBlocked, joinedDate)
+VALUES ('berdaniel04@gmail.com', 'daniel6839', 'danBer', '1', '0', '0', '0','0','2003-12-25','hailanot st. 7', '12313', '111','2023-12-25','0', '2020-12-25');
+INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, creditCardNumber, CVV, creditCardValidity, isBlocked, joinedDate)
+VALUES ('danielbe4@ramon.edum.org.il', 'daniel6839', 'danBer2', '1', '0', '0', '0','0','2003-12-25','hailanot st. 7', '12313', '111','2023-12-25','0', '2020-12-25');

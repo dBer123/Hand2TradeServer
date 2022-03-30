@@ -8,9 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hand2TradeServerBL.Models
 {
-    [Table("TradeChat")]
     public partial class TradeChat
     {
+        public TradeChat()
+        {
+            TextMessages = new HashSet<TextMessage>();
+        }
+
         [Key]
         [Column("chatID")]
         public int ChatId { get; set; }
@@ -32,5 +36,7 @@ namespace Hand2TradeServerBL.Models
         [ForeignKey(nameof(SellerId))]
         [InverseProperty(nameof(User.TradeChatSellers))]
         public virtual User Seller { get; set; }
+        [InverseProperty(nameof(TextMessage.Chat))]
+        public virtual ICollection<TextMessage> TextMessages { get; set; }
     }
 }

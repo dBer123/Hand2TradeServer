@@ -12,7 +12,6 @@ namespace Hand2TradeServerBL.Models
     {
         public Item()
         {
-            TextMessages = new HashSet<TextMessage>();
             TradeChats = new HashSet<TradeChat>();
         }
 
@@ -26,7 +25,7 @@ namespace Hand2TradeServerBL.Models
         [StringLength(30)]
         public string ItemName { get; set; }
         [Column("price")]
-        public int Price { get; set; }       
+        public int Price { get; set; }
         [Required]
         [Column("desrciption")]
         [StringLength(255)]
@@ -35,8 +34,6 @@ namespace Hand2TradeServerBL.Models
         [ForeignKey(nameof(UserId))]
         [InverseProperty("Items")]
         public virtual User User { get; set; }
-        [InverseProperty(nameof(TextMessage.Chat))]
-        public virtual ICollection<TextMessage> TextMessages { get; set; }
         [InverseProperty(nameof(TradeChat.Item))]
         public virtual ICollection<TradeChat> TradeChats { get; set; }
     }

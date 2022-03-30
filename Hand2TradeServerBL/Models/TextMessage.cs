@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hand2TradeServerBL.Models
 {
-    [Table("TextMessage")]
     public partial class TextMessage
     {
         [Key]
@@ -22,10 +21,12 @@ namespace Hand2TradeServerBL.Models
         [Column("textMessage")]
         [StringLength(255)]
         public string TextMessage1 { get; set; }
+        [Column("sentTime", TypeName = "datetime")]
+        public DateTime SentTime { get; set; }
 
         [ForeignKey(nameof(ChatId))]
-        [InverseProperty(nameof(Item.TextMessages))]
-        public virtual Item Chat { get; set; }
+        [InverseProperty(nameof(TradeChat.TextMessages))]
+        public virtual TradeChat Chat { get; set; }
         [ForeignKey(nameof(SenderId))]
         [InverseProperty(nameof(User.TextMessages))]
         public virtual User Sender { get; set; }

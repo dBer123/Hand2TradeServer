@@ -8,11 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hand2TradeServerBL.Models
 {
-    [Table("Loan")]
     public partial class Loan
     {
         [Key]
-        [Column("LoanID")]
+        [Column("loanID")]
         public int LoanId { get; set; }
         [Column("loanerID")]
         public int LoanerId { get; set; }
