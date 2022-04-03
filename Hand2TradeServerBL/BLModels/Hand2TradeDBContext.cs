@@ -175,7 +175,7 @@ namespace Hand2TradeServerBL.Models
             {
                
                 User user = this.Users
-               .Where(u => u.UserId == userid).Include(u => u.Items).
+               .Where(u => u.UserId == userid).Include(u => u.Items)
                .FirstOrDefault();
                 user.IsBlocked = true;
                 foreach (Item item in user.Items)

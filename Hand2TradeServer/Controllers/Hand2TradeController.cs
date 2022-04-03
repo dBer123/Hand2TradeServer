@@ -325,6 +325,44 @@ namespace Hand2TradeServer.Controllers
             }
         }
 
+        [Route("Report")]
+        [HttpGet]
+        public bool Report([FromQuery] int reportedID, int senderID)
+        {
+
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null)
+            {
+
+                return true;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+
+        [Route("Rate")]
+        [HttpGet]
+        public bool Rate([FromQuery] int ratedUserID, int senderID, double rate)
+        {
+
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null)
+            {
+
+                return true;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+
     }
 
 }
