@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Hand2TradeServerBL.Models;
+using Hand2TradeServer.Hubs;
 
 
 
@@ -29,7 +30,7 @@ namespace Hand2TradeServer
                         .ReferenceHandler = ReferenceHandler.Preserve);
             //The following two commands set the Session state to work!
             services.AddDistributedMemoryCache();
-
+            services.AddSignalR();
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(180);
@@ -58,10 +59,11 @@ namespace Hand2TradeServer
             app.UseStaticFiles(); //Added to have the wwwroot folder and server to accept calls to static files
             app.UseRouting();
             app.UseSession(); //Added to tell the server to use sessions!
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("ChatHub");
             });
         }
         public Startup(IConfiguration configuration)

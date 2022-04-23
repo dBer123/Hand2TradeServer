@@ -15,8 +15,6 @@ namespace Hand2TradeServerBL.Models
         public int LoanId { get; set; }
         [Column("loanerID")]
         public int LoanerId { get; set; }
-        [Column("coinsLoaned")]
-        public int CoinsLoaned { get; set; }
         [Column("debt")]
         public int Debt { get; set; }
         [Column("isDebtPaid")]

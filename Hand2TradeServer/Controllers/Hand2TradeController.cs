@@ -10,6 +10,7 @@ using System.IO;
 using Hand2TradeServer.DTO;
 using Hand2TradeServer.Sevices;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace Hand2TradeServer.Controllers
 {
@@ -72,11 +73,10 @@ namespace Hand2TradeServer.Controllers
         public UserDTO SignUp([FromBody] UserDTO a)
         {
             User p = null;
-            if (IsValidCard(a.CreditNum))
-            {
-                p = context.AddUser(a.Passwrd, a.UserName, a.Email, a.Coins, a.Adress, a.BirthDate, a.IsAdmin, a.IsBlocked, a.CreditNum, a.CardDate, a.CVV, a.JoinedDate);
 
-            }
+            p = context.AddUser(a.Passwrd, a.UserName, a.Email, a.Coins, a.Adress, a.BirthDate, a.IsAdmin, a.IsBlocked, a.JoinedDate);
+
+
             if (p != null)
             {
                 //Create temporary code for email validation
@@ -103,18 +103,7 @@ namespace Hand2TradeServer.Controllers
             }
         }
 
-        public bool IsValidCard(string txtCardNumber)
-        {
-            if (txtCardNumber.StartsWith("1298") ||
-                txtCardNumber.StartsWith("1267") ||
-                txtCardNumber.StartsWith("4512") ||
-                txtCardNumber.StartsWith("4567") ||
-                txtCardNumber.StartsWith("8901") ||
-                txtCardNumber.StartsWith("5326") ||
-                txtCardNumber.StartsWith("8933")) return true;
 
-            return false;
-        }
 
         [Route("AddItem")]
         [HttpPost]
@@ -211,7 +200,7 @@ namespace Hand2TradeServer.Controllers
         [HttpPost]
         public ItemDTO UpdateContact([FromBody] ItemDTO itemDTO)
         {
-           
+
             User user = HttpContext.Session.GetObject<User>("theUser");
             //Check if user logged in and its ID is the same as the userDTO user ID
             if (user != null)
@@ -316,7 +305,6 @@ namespace Hand2TradeServer.Controllers
             if (user != null)
             {
                 return context.Block(userId);
-
             }
             else
             {
@@ -327,15 +315,14 @@ namespace Hand2TradeServer.Controllers
 
         [Route("Report")]
         [HttpGet]
-        public bool Report([FromQuery] int reportedID, int senderID)
+        public bool Report([FromQuery] int reportedID)
         {
 
             User user = HttpContext.Session.GetObject<User>("theUser");
             //Check if user logged in and its ID is the same as the userDTO user ID
             if (user != null)
             {
-
-                return true;
+                return context.Report(user.UserId, reportedID);
             }
             else
             {
@@ -346,15 +333,66 @@ namespace Hand2TradeServer.Controllers
 
         [Route("Rate")]
         [HttpGet]
-        public bool Rate([FromQuery] int ratedUserID, int senderID, double rate)
+        public bool Rate([FromQuery] int ratedUserID, double rate)
         {
 
             User user = HttpContext.Session.GetObject<User>("theUser");
             //Check if user logged in and its ID is the same as the userDTO user ID
             if (user != null)
             {
+                return context.Rate(user.UserId, ratedUserID, rate);
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+        [Route("Like")]
+        [HttpGet]
+        public bool Like([FromQuery] int itemID)
+        {
 
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null)
+            {
+                return context.Like(user.UserId, itemID);
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+        [Route("UnLike")]
+        [HttpGet]
+        public bool UnLike([FromQuery] int itemID)
+        {
+
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null)
+            {
+                return context.UnLike(user.UserId, itemID);
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+        [Route("MakeALoan")]
+        [HttpPost]
+        public bool MakeALoan([FromBody] Loan loan)
+        {
+
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null)
+            {
                 return true;
+
             }
             else
             {
@@ -363,6 +401,106 @@ namespace Hand2TradeServer.Controllers
             }
         }
 
+        [Route("create-group")]
+        [HttpPost]
+        public string CreateGroup([FromBody] TradeChat chat)
+        {
+            UserDTO loggedInAccount = HttpContext.Session.GetObject<UserDTO>("account");
+
+            if (loggedInAccount != null)
+            {
+                TradeChat returnedChat = context.CreateGroup(chat, loggedInAccount.UserId);
+                if (returnedChat != null)
+                {
+                    JsonSerializerSettings options = new JsonSerializerSettings
+                    {
+                        PreserveReferencesHandling = PreserveReferencesHandling.All
+                    };
+
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    string json = JsonConvert.SerializeObject(returnedChat, options);
+                    return json;
+                }
+
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                return null;
+            }
+
+            Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+            return null;
+        }
+
+        [Route("get-groups")]
+        [HttpGet]
+        public string GetGroups()
+        {
+            UserDTO loggedInAccount = HttpContext.Session.GetObject<UserDTO>("account");
+
+            if (loggedInAccount != null)
+            {
+                try
+                {
+                    List<TradeChat> chats = context.GetGroups(loggedInAccount.UserId);
+
+                    JsonSerializerSettings options = new JsonSerializerSettings
+                    {
+                        PreserveReferencesHandling = PreserveReferencesHandling.All
+                    };
+
+                    string json = JsonConvert.SerializeObject(chats, options);
+
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    return json;
+                }
+                catch
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                    return null;
+                }
+            }
+
+            Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+            return null;
+        }
+
+        [Route("get-group")]
+        [HttpGet]
+        public string GetGroup([FromQuery] int chatId)
+        {
+            UserDTO loggedInAccount = HttpContext.Session.GetObject<UserDTO>("account");
+
+            if (loggedInAccount != null)
+            {
+                try
+                {
+                    TradeChat chat = context.GetGroup(chatId);
+
+                    if (chat != null)
+                    {
+                        JsonSerializerSettings options = new JsonSerializerSettings
+                        {
+                            PreserveReferencesHandling = PreserveReferencesHandling.All
+                        };
+
+                        string json = JsonConvert.SerializeObject(chat, options);
+
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                        return json;
+                    }
+
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                    return null;
+                }
+                catch
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                    return null;
+                }
+            }
+
+            Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+            return null;
+        }
     }
 
 }

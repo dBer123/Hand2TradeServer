@@ -11,13 +11,10 @@ CREATE TABLE Users(
     isAdmin Bit NOT NULL,
     coins INT NOT NULL,
     reports INT NOT NULL,
-    sumRanks INT NOT NULL,
+    sumRanks FLOAT NOT NULL,
     countRanked INT NOT NULL,
     bearthDate DATETIME NOT NULL,
     adress NVARCHAR(255) NOT NULL,
-    creditCardNumber NVARCHAR(255) NOT NULL,
-    CVV NVARCHAR(255) NOT NULL, 
-    creditCardValidity DATETIME NOT NULL,
     isBlocked Bit NOT NULL,
 	joinedDate DATETIME NOT NULL,
 	CONSTRAINT UC_email UNIQUE(email)
@@ -54,7 +51,6 @@ CREATE TABLE TextMessages(
 CREATE TABLE Loans(
     loanID INT IDENTITY Primary Key NOT NULL,
     loanerID INT NOT NULL FOREIGN KEY REFERENCES Users(userID),
-    coinsLoaned INT NOT NULL,
     debt INT NOT NULL,
     isDebtPaid Bit NOT NULL,
     paymentDate DATETIME NOT NULL
@@ -102,8 +98,13 @@ CREATE TABLE Ratings(
 	senderID INT NOT NULL FOREIGN KEY REFERENCES Users(userID),
 	rate FLOAT NOT NULL
 )
+CREATE TABLE LikedItems(
+    likedItemID INT IDENTITY Primary Key NOT NULL,
+	itemID INT NOT NULL FOREIGN KEY REFERENCES Items(itemID),
+	senderID INT NOT NULL FOREIGN KEY REFERENCES Users(userID)
+)
 
-INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, creditCardNumber, CVV, creditCardValidity, isBlocked, joinedDate)
-VALUES ('berdaniel04@gmail.com', 'daniel6839', 'danBer', '1', '0', '0', '0','0','2003-12-25','hailanot st. 7', '12313', '111','2023-12-25','0', '2020-12-25');
-INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, creditCardNumber, CVV, creditCardValidity, isBlocked, joinedDate)
-VALUES ('danielbe4@ramon.edum.org.il', 'daniel6839', 'danBer2', '1', '0', '0', '0','0','2003-12-25','hailanot st. 7', '12313', '111','2023-12-25','0', '2020-12-25');
+INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, isBlocked, joinedDate)
+VALUES ('berdaniel04@gmail.com', 'daniel6839', 'danBer', '1', '0', '0', '0','0','2003-12-25','hailanot st. 7','0', '2020-12-25');
+INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, isBlocked, joinedDate)
+VALUES ('danielbe4@ramon.edum.org.il', 'daniel6839', 'danBer2', '1', '0', '0', '0','0','2003-12-25','hailanot st. 7','0', '2020-12-25');

@@ -14,6 +14,7 @@ namespace Hand2TradeServerBL.Models
         public User()
         {
             Items = new HashSet<Item>();
+            LikedItems = new HashSet<LikedItem>();
             Loans = new HashSet<Loan>();
             RatingRatedUsers = new HashSet<Rating>();
             RatingSenders = new HashSet<Rating>();
@@ -46,7 +47,7 @@ namespace Hand2TradeServerBL.Models
         [Column("reports")]
         public int Reports { get; set; }
         [Column("sumRanks")]
-        public int SumRanks { get; set; }
+        public double SumRanks { get; set; }
         [Column("countRanked")]
         public int CountRanked { get; set; }
         [Column("bearthDate", TypeName = "datetime")]
@@ -55,16 +56,6 @@ namespace Hand2TradeServerBL.Models
         [Column("adress")]
         [StringLength(255)]
         public string Adress { get; set; }
-        [Required]
-        [Column("creditCardNumber")]
-        [StringLength(255)]
-        public string CreditCardNumber { get; set; }
-        [Required]
-        [Column("CVV")]
-        [StringLength(255)]
-        public string Cvv { get; set; }
-        [Column("creditCardValidity", TypeName = "datetime")]
-        public DateTime CreditCardValidity { get; set; }
         [Column("isBlocked")]
         public bool IsBlocked { get; set; }
         [Column("joinedDate", TypeName = "datetime")]
@@ -72,6 +63,8 @@ namespace Hand2TradeServerBL.Models
 
         [InverseProperty(nameof(Item.User))]
         public virtual ICollection<Item> Items { get; set; }
+        [InverseProperty(nameof(LikedItem.Sender))]
+        public virtual ICollection<LikedItem> LikedItems { get; set; }
         [InverseProperty(nameof(Loan.Loaner))]
         public virtual ICollection<Loan> Loans { get; set; }
         [InverseProperty(nameof(Rating.RatedUser))]

@@ -12,6 +12,7 @@ namespace Hand2TradeServerBL.Models
     {
         public Item()
         {
+            LikedItems = new HashSet<LikedItem>();
             TradeChats = new HashSet<TradeChat>();
         }
 
@@ -34,6 +35,8 @@ namespace Hand2TradeServerBL.Models
         [ForeignKey(nameof(UserId))]
         [InverseProperty("Items")]
         public virtual User User { get; set; }
+        [InverseProperty(nameof(LikedItem.Item))]
+        public virtual ICollection<LikedItem> LikedItems { get; set; }
         [InverseProperty(nameof(TradeChat.Item))]
         public virtual ICollection<TradeChat> TradeChats { get; set; }
     }
