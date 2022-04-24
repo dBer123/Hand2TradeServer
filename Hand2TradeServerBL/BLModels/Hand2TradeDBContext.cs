@@ -242,13 +242,13 @@ namespace Hand2TradeServerBL.Models
             {
 
                 User user = this.Users
-               .Where(u => u.UserId == senderid).Include(u => u.ReportReportedUsers)
+               .Where(u => u.UserId == senderid).Include(u => u.ReportSenders)
                .FirstOrDefault();
                 User user2 = this.Users
                .Where(u => u.UserId == reportedUserid)
                .FirstOrDefault();
                 bool found = false;
-                foreach (Report r in user.ReportReportedUsers)
+                foreach (Report r in user.ReportSenders)
                 {
                     if (r.ReportedUserId == reportedUserid)
                     {
@@ -356,8 +356,9 @@ namespace Hand2TradeServerBL.Models
                 this.SaveChanges();
                 return m;
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -365,12 +366,14 @@ namespace Hand2TradeServerBL.Models
         {
             try
             {
-                this.TradeChats.Add(c);
+                this.Entry(c).State = EntityState.Added;
+                //this.TradeChats.Add(c);
                 this.SaveChanges();
                 return c;
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -380,8 +383,9 @@ namespace Hand2TradeServerBL.Models
             {
                 return this.TradeChats.Where(c => c.ChatId == chatId).FirstOrDefault();
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -392,8 +396,9 @@ namespace Hand2TradeServerBL.Models
                 List<TradeChat> chats = this.TradeChats.Where(c => c.BuyerId == accountID || c.SellerId == accountID).ToList();               
                 return chats;
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return null;
             }
         }

@@ -405,7 +405,7 @@ namespace Hand2TradeServer.Controllers
         [HttpPost]
         public string CreateGroup([FromBody] TradeChat chat)
         {
-            UserDTO loggedInAccount = HttpContext.Session.GetObject<UserDTO>("account");
+            User loggedInAccount = HttpContext.Session.GetObject<User>("theUser");
 
             if (loggedInAccount != null)
             {
@@ -432,25 +432,16 @@ namespace Hand2TradeServer.Controllers
 
         [Route("get-groups")]
         [HttpGet]
-        public string GetGroups()
+        public IEnumerable<TradeChat> GetGroups()
         {
-            UserDTO loggedInAccount = HttpContext.Session.GetObject<UserDTO>("account");
+            User loggedInAccount = HttpContext.Session.GetObject<User>("theUser");
 
             if (loggedInAccount != null)
             {
                 try
                 {
-                    List<TradeChat> chats = context.GetGroups(loggedInAccount.UserId);
-
-                    JsonSerializerSettings options = new JsonSerializerSettings
-                    {
-                        PreserveReferencesHandling = PreserveReferencesHandling.All
-                    };
-
-                    string json = JsonConvert.SerializeObject(chats, options);
-
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                    return json;
+                    List<TradeChat> chats = context.GetGroups(loggedInAccount.UserId);                   
+                    return chats;
                 }
                 catch
                 {
@@ -465,7 +456,7 @@ namespace Hand2TradeServer.Controllers
 
         [Route("get-group")]
         [HttpGet]
-        public string GetGroup([FromQuery] int chatId)
+        public TradeChat GetGroup([FromQuery] int chatId)
         {
             UserDTO loggedInAccount = HttpContext.Session.GetObject<UserDTO>("account");
 
@@ -476,16 +467,9 @@ namespace Hand2TradeServer.Controllers
                     TradeChat chat = context.GetGroup(chatId);
 
                     if (chat != null)
-                    {
-                        JsonSerializerSettings options = new JsonSerializerSettings
-                        {
-                            PreserveReferencesHandling = PreserveReferencesHandling.All
-                        };
-
-                        string json = JsonConvert.SerializeObject(chat, options);
-
+                    {                        
                         Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                        return json;
+                        return chat;
                     }
 
                     Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
