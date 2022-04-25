@@ -381,7 +381,7 @@ namespace Hand2TradeServerBL.Models
         {
             try
             {
-                return this.TradeChats.Where(c => c.ChatId == chatId).FirstOrDefault();
+                return this.TradeChats.Where(c => c.ChatId == chatId).Include(c => c.Buyer).Include(c => c.Seller).Include(c => c.Item).FirstOrDefault();
             }
             catch (Exception e)
             {

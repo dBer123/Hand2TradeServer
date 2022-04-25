@@ -85,7 +85,7 @@ CREATE TABLE HourlyReports(
     loansDeptPaid INT NOT NULL,
     reportsNum INT NOT NULL
 ) 
-
+p
 CREATE TABLE Reports(
     reportID INT IDENTITY Primary Key NOT NULL,
 	reportedUserID INT NOT NULL FOREIGN KEY REFERENCES Users(userID),
