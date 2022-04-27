@@ -8,22 +8,10 @@ namespace Hand2TradeServer.Hubs
 {
     public class ChatHub : Hub
     {
-        #region Add connection to the db context using dependency injection
-        Hand2TradeDBContext context;
-        public ChatHub(Hand2TradeDBContext context)
-        {
-            this.context = context;
-        }
-        #endregion
-        
         public async Task SendMessageToGroup(string user, string message, string groupName)
         {
             IClientProxy proxy = Clients.Group(groupName);
             await proxy.SendAsync("ReceiveMessageFromGroup", user, message, groupName);
-        }
-        public async Task SendMessage(string user, string message)
-        {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
 
         public async Task OnConnect(string[] groupNames)

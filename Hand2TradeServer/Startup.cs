@@ -63,7 +63,7 @@ namespace Hand2TradeServer
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<ChatHub>("ChatHub");
+                endpoints.MapHub<ChatService>("ChatHub");
             });
         }
         public Startup(IConfiguration configuration)
