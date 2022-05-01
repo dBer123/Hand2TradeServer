@@ -3,15 +3,26 @@ using System.Threading.Tasks;
 using Hand2TradeServerBL.Models;
 using Hand2TradeServer.DTO;
 using System;
+using Hand2TradeServer.Sevices;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace Hand2TradeServer.Hubs
 {
     public class ChatHub : Hub
     {
-        public async Task SendMessageToGroup(string user, string message, string groupName)
+        #region Add connection to the db context using dependency injection
+        Hand2TradeDBContext context;
+        public ChatHub(Hand2TradeDBContext context)
         {
-            IClientProxy proxy = Clients.Group(groupName);
-            await proxy.SendAsync("ReceiveMessageFromGroup", user, message, groupName);
+            this.context = context;
+        }
+        #endregion
+        public async Task SendMessageToGroup(string user, TextMessage textMessage)
+        {
+            IClientProxy proxy = Clients.Group(textMessage.ChatId.ToString());
+            context.AddMessage(textMessage);
+            await proxy.SendAsync("ReceiveMessageFromGroup", textMessage);
         }
 
         public async Task OnConnect(string[] groupNames)
