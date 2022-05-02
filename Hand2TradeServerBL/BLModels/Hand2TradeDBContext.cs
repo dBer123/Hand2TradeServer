@@ -15,11 +15,16 @@ namespace Hand2TradeServerBL.Models
             User user = this.Users
                 .Where(u => u.Email == email && u.Passwrd == pswd)
                 .Include(u => u.Items).FirstOrDefault();
-            int countReports= user.ReportReportedUsers.Count;
-            if (countReports > 40)
+            if (user != null)
             {
-                user.IsBlocked = true;
+                int countReports = user.ReportReportedUsers.Count;
+                if (countReports > 40)
+                {
+                    user.IsBlocked = true;
+                }
             }
+          
+            
            
             return user;
         }
@@ -348,18 +353,23 @@ namespace Hand2TradeServerBL.Models
                 return false;
             }
         }
-        public TextMessage AddMessage(TextMessage m)
+        public void AddMessage(string sender, string chatId, string message)
         {
             try
             {
+                TextMessage m = new TextMessage
+                {
+                    SenderId = int.Parse(sender),
+                    TextMessage1 = message,
+                    ChatId = int.Parse(chatId),
+                    SentTime = DateTime.Now
+                };
                 this.TextMessages.Add(m);
                 this.SaveChanges();
-                return m;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return null;
             }
         }
         public TradeChat CreateGroup(TradeChat c, int accountId)

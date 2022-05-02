@@ -18,11 +18,11 @@ namespace Hand2TradeServer.Hubs
             this.context = context;
         }
         #endregion
-        public async Task SendMessageToGroup(string user, TextMessage textMessage)
+        public async Task SendMessage(string sender, string receiver, string chatId, string message)
         {
-            IClientProxy proxy = Clients.Group(textMessage.ChatId.ToString());
-            context.AddMessage(textMessage);
-            await proxy.SendAsync("ReceiveMessageFromGroup", textMessage);
+            context.AddMessage(sender, chatId, message);
+            await Clients.All.SendAsync("ReceiveMessage", sender, receiver, chatId, message);
+            
         }
 
         public async Task OnConnect(string[] groupNames)

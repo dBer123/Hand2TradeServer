@@ -44,6 +44,7 @@ namespace Hand2TradeServer
 
             services.AddDbContext<Hand2TradeDBContext>(options => options
                                                                 .UseSqlServer(connectionString));
+            
             //.UseLazyLoadingProxies());
             #endregion
         }
