@@ -409,7 +409,7 @@ namespace Hand2TradeServer.Controllers
 
             if (loggedInAccount != null)
             {
-                TradeChat returnedChat = context.CreateGroup(chat, loggedInAccount.UserId);
+                TradeChat returnedChat = context.CreateGroup(chat);
                 if (returnedChat != null)
                 {
                     JsonSerializerSettings options = new JsonSerializerSettings
@@ -432,7 +432,7 @@ namespace Hand2TradeServer.Controllers
 
         [Route("get-groups")]
         [HttpGet]
-        public IEnumerable<TradeChat> GetGroups()
+        public List<TradeChat> GetGroups()
         {
             User loggedInAccount = HttpContext.Session.GetObject<User>("theUser");
 
@@ -454,37 +454,37 @@ namespace Hand2TradeServer.Controllers
             return null;
         }
 
-        [Route("get-group")]
-        [HttpGet]
-        public TradeChat GetGroup([FromQuery] int chatId)
-        {
-            UserDTO loggedInAccount = HttpContext.Session.GetObject<UserDTO>("account");
+        //[Route("get-group")]
+        //[HttpGet]
+        //public TradeChat GetGroup([FromQuery] int chatId)
+        //{
+        //    UserDTO loggedInAccount = HttpContext.Session.GetObject<UserDTO>("account");
 
-            if (loggedInAccount != null)
-            {
-                try
-                {
-                    TradeChat chat = context.GetGroup(chatId);
+        //    if (loggedInAccount != null)
+        //    {
+        //        try
+        //        {
+        //            TradeChat chat = context.GetGroup(chatId);
 
-                    if (chat != null)
-                    {                        
-                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                        return chat;
-                    }
+        //            if (chat != null)
+        //            {                        
+        //                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+        //                return chat;
+        //            }
 
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-                    return null;
-                }
-                catch
-                {
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-                    return null;
-                }
-            }
+        //            Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+        //            return null;
+        //        }
+        //        catch
+        //        {
+        //            Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+        //            return null;
+        //        }
+        //    }
 
-            Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-            return null;
-        }
+        //    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+        //    return null;
+        //}
     }
 
 }

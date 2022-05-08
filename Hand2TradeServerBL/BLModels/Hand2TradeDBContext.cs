@@ -372,12 +372,11 @@ namespace Hand2TradeServerBL.Models
                 Console.WriteLine(e);
             }
         }
-        public TradeChat CreateGroup(TradeChat c, int accountId)
+        public TradeChat CreateGroup(TradeChat c)
         {
             try
             {
                 this.Entry(c).State = EntityState.Added;
-                //this.TradeChats.Add(c);
                 this.SaveChanges();
                 return c;
             }
