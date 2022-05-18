@@ -120,7 +120,7 @@ namespace Hand2TradeServerBL.Models
             {
                 Item item = this.Items
                             .Where(i => i.ItemId == id).FirstOrDefault();
-                Items.Remove(item);
+                this.Entry(item).State = EntityState.Deleted;
                 this.SaveChanges();
                 return true;
             }

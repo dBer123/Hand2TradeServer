@@ -441,6 +441,12 @@ namespace Hand2TradeServer.Controllers
                 try
                 {
                     List<TradeChat> chats = context.GetGroups(loggedInAccount.UserId);                   
+                    foreach(TradeChat chat in chats)
+                    {
+                        chat.Buyer.Items = new List<Item>();
+                        chat.Seller.Items = new List<Item>();
+
+                    }
                     return chats;
                 }
                 catch

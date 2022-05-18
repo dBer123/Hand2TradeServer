@@ -105,6 +105,6 @@ CREATE TABLE LikedItems(
 )
 
 INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, isBlocked, joinedDate)
-VALUES ('berdaniel04@gmail.com', 'daniel6839', 'danBer', '1', '0', '0', '0','0','2003-12-25','hailanot st. 7','0', '2020-12-25');
+VALUES ('berdaniel04@gmail.com', 'daniel6839', 'danBer', '1', '500', '0', '0','0','2003-12-25','hailanot st. 7','0', '2020-12-25');
 INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, isBlocked, joinedDate)
-VALUES ('danielbe4@ramon.edum.org.il', 'daniel6839', 'danBer2', '1', '0', '0', '0','0','2003-12-25','hailanot st. 7','0', '2020-12-25');
+VALUES ('danielbe4@ramon.edum.org.il', 'daniel6839', 'danBer2', '1', '500', '0', '0','0','2003-12-25','hailanot st. 7','0', '2020-12-25');
