@@ -432,7 +432,7 @@ namespace Hand2TradeServer.Controllers
 
         [Route("get-groups")]
         [HttpGet]
-        public List<TradeChat> GetGroups()
+        public List<TradeChatDTO> GetGroups()
         {
             User loggedInAccount = HttpContext.Session.GetObject<User>("theUser");
 
@@ -440,14 +440,16 @@ namespace Hand2TradeServer.Controllers
             {
                 try
                 {
+                    List<TradeChatDTO> tradeChats = new List<TradeChatDTO>();
                     List<TradeChat> chats = context.GetGroups(loggedInAccount.UserId);                   
                     foreach(TradeChat chat in chats)
                     {
-                        chat.Buyer.Items = new List<Item>();
-                        chat.Seller.Items = new List<Item>();
+                        TradeChatDTO tChat = new TradeChatDTO(chat);
+                        tradeChats.Add(tChat);
+                     
 
                     }
-                    return chats;
+                    return tradeChats;
                 }
                 catch
                 {
