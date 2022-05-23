@@ -21,6 +21,8 @@ namespace Hand2TradeServer.DTO
         public int CountRanked { get; set; }
         public DateTime JoinedDate { get; set; }
         public virtual ICollection<Item> Items { get; set; }
+        public virtual ICollection<TradeChatDTO> TradeChatBuyers { get; set; }
+        public virtual ICollection<TradeChatDTO> TradeChatSellers { get; set; }
 
         public UserDTO() { }
         
@@ -41,6 +43,14 @@ namespace Hand2TradeServer.DTO
             CountRanked = u.CountRanked;
             Items = u.Items;
             JoinedDate = u.JoinedDate;
+            foreach (TradeChat chat in u.TradeChatBuyers)
+            {
+                this.TradeChatBuyers.Add(new TradeChatDTO(chat));
+            }
+            foreach (TradeChat chat in u.TradeChatSellers)
+            {
+                this.TradeChatSellers.Add(new TradeChatDTO(chat));
+            }
         }
 
     }
