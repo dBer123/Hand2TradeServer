@@ -493,6 +493,40 @@ namespace Hand2TradeServer.Controllers
         //    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
         //    return null;
         //}
+        [Route("GetHourlyReport")]
+        [HttpGet]
+        public IEnumerable<HourlyReport> GetHourlyReport()
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null)
+            {
+                return context.GetHourlyReport();
+
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
+        [Route("GetMonthlyReport")]
+        [HttpGet]
+        public IEnumerable<MonthlyReport> GetMonthlyReport()
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the userDTO user ID
+            if (user != null)
+            {
+                return context.GetMonthlyReport();
+
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
     }
 
 }

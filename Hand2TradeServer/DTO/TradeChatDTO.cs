@@ -17,7 +17,7 @@ namespace Hand2TradeServer.DTO
         public virtual UserDTO Buyer { get; set; }
         public virtual ItemDTO Item { get; set; }
         public virtual UserDTO Seller { get; set; }
-        public virtual ICollection<TextMessage> TextMessages { get; set; }
+        public virtual ICollection<TextMessageDTO> TextMessages { get; set; }
 
        public TradeChatDTO()
         {
@@ -33,8 +33,11 @@ namespace Hand2TradeServer.DTO
             this.Seller = new UserDTO(chat.Seller);
             this.SellerId = chat.SellerId;
             this.IsTradeAgreed = chat.IsTradeAgreed;
-            this.TextMessages = chat.TextMessages;
+            this.TextMessages = new List<TextMessageDTO>();
+            foreach (TextMessage message in chat.TextMessages)
+            {
 
+            }
 
 
         }

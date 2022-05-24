@@ -411,5 +411,31 @@ namespace Hand2TradeServerBL.Models
                 return null;
             }
         }
-    }   
+        public List<MonthlyReport> GetMonthlyReport() 
+        {
+            try
+            {
+                List<MonthlyReport> monthlyReport = this.MonthlyReports.Where(r => r.DateOfMonth.AddMonths(12) >= DateTime.Today).ToList();
+                return monthlyReport;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+         public List<HourlyReport> GetHourlyReport() 
+        {
+            try
+            {
+                List<HourlyReport> hourlyReport = this.HourlyReports.Where(r => r.HourTime.Date.AddDays(7) >= DateTime.Today).ToList();
+                return hourlyReport;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+    }
 }
