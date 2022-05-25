@@ -28,7 +28,7 @@ namespace Hand2TradeServer.DTO
         
 
 
-        public UserDTO(User u)
+        public UserDTO(User u, bool isIncludeChats)
         {
             UserId = u.UserId;
             Email = u.Email;
@@ -43,14 +43,17 @@ namespace Hand2TradeServer.DTO
             CountRanked = u.CountRanked;
             Items = u.Items;
             JoinedDate = u.JoinedDate;
-            foreach (TradeChat chat in u.TradeChatBuyers)
+            if (isIncludeChats)
             {
-                this.TradeChatBuyers.Add(new TradeChatDTO(chat));
-            }
-            foreach (TradeChat chat in u.TradeChatSellers)
-            {
-                this.TradeChatSellers.Add(new TradeChatDTO(chat));
-            }
+                foreach (TradeChat chat in u.TradeChatBuyers)
+                {
+                    this.TradeChatBuyers.Add(new TradeChatDTO(chat));
+                }
+                foreach (TradeChat chat in u.TradeChatSellers)
+                {
+                    this.TradeChatSellers.Add(new TradeChatDTO(chat));
+                }
+            }            
         }
 
     }

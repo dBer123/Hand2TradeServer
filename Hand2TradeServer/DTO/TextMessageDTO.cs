@@ -24,7 +24,7 @@ namespace Hand2TradeServer.DTO
             this.SentTime = message.SentTime;
             this.TextMessage1 = message.TextMessage1;
             this.MessageId = message.MessageId;
-            this.Sender= new UserDTO(message.Sender);
+            this.Sender= new UserDTO(message.Sender ,false);
         }
 
     }

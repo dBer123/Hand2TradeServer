@@ -41,7 +41,7 @@ namespace Hand2TradeServer.Controllers
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 
                 //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                UserDTO u = new UserDTO(user);
+                UserDTO u = new UserDTO(user, true);
                 return u;
             }
             else
@@ -90,7 +90,7 @@ namespace Hand2TradeServer.Controllers
                 {
 
                 }
-                UserDTO uDTO = new UserDTO(p);
+                UserDTO uDTO = new UserDTO(p ,true);
                 HttpContext.Session.SetObject("user", uDTO);
                 HttpContext.Session.SetObject("EmailValidation", pass.ToString());
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
@@ -187,7 +187,7 @@ namespace Hand2TradeServer.Controllers
                 User updated = context.UpdateUser(userDTO.Adress, userDTO.Passwrd, userDTO.UserName, userDTO.UserId);
                 HttpContext.Session.SetObject("theUser", user);
                 //return the contact with its new ID if that was a new userDTO
-                UserDTO u = new UserDTO(updated);
+                UserDTO u = new UserDTO(updated, true);
                 return u;
             }
             else
@@ -267,7 +267,7 @@ namespace Hand2TradeServer.Controllers
                 List<UserDTO> users1 = new List<UserDTO>();
                 foreach (User ezer in users)
                 {
-                    users1.Add(new UserDTO(ezer));
+                    users1.Add(new UserDTO(ezer ,true));
                 }
                 IEnumerable<UserDTO> users2 = new List<UserDTO>(users1);
                 return users2;

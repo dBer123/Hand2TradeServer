@@ -28,15 +28,15 @@ namespace Hand2TradeServer.DTO
             this.ChatId = chat.ChatId;
             this.Item = new ItemDTO(chat.Item);
             this.ItemId = chat.ItemId;
-            this.Buyer = new UserDTO(chat.Buyer);
+            this.Buyer = new UserDTO(chat.Buyer, false);
             this.BuyerId = chat.BuyerId;
-            this.Seller = new UserDTO(chat.Seller);
+            this.Seller = new UserDTO(chat.Seller, false);
             this.SellerId = chat.SellerId;
             this.IsTradeAgreed = chat.IsTradeAgreed;
             this.TextMessages = new List<TextMessageDTO>();
             foreach (TextMessage message in chat.TextMessages)
             {
-
+                this.TextMessages.Add(new TextMessageDTO(message));
             }
 
 
