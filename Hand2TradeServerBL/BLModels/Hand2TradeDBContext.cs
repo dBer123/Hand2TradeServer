@@ -402,7 +402,7 @@ namespace Hand2TradeServerBL.Models
         {
             try
             {
-                List<TradeChat> chats = this.TradeChats.Where(c => c.BuyerId == accountID || c.SellerId == accountID).Include(c => c.Buyer).Include(c => c.Seller).Include(c => c.Item).ToList();               
+                List<TradeChat> chats = this.TradeChats.Where(c => c.BuyerId == accountID || c.SellerId == accountID).Include(c => c.Buyer).Include(c => c.Seller).Include(c => c.Item).Include(c => c.TextMessages).ToList();               
                 return chats;
             }
             catch (Exception e)

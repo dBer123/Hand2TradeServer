@@ -18,13 +18,11 @@ namespace Hand2TradeServer.DTO
         public TextMessageDTO() { }
         public TextMessageDTO(TextMessage message) 
         {
-            this.Chat = new TradeChatDTO(message.Chat);
             this.ChatId = message.ChatId;
             this.SenderId = message.SenderId;
             this.SentTime = message.SentTime;
             this.TextMessage1 = message.TextMessage1;
             this.MessageId = message.MessageId;
-            this.Sender= new UserDTO(message.Sender ,false);
         }
 
     }
