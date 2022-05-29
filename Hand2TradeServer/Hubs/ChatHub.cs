@@ -21,7 +21,8 @@ namespace Hand2TradeServer.Hubs
         public async Task SendMessage(string sender, string receiver, string chatId, string message)
         {
             context.AddMessage(sender, chatId, message);
-            await Clients.All.SendAsync("ReceiveMessage", sender, receiver, chatId, message);
+            IClientProxy proxy = Clients.Group(chatId);
+            await proxy.SendAsync("ReceiveMessage", sender, receiver, chatId, message);
             
         }
 

@@ -424,12 +424,30 @@ namespace Hand2TradeServerBL.Models
                 return null;
             }
         }
-         public List<HourlyReport> GetHourlyReport() 
+        public List<HourlyReport> GetHourlyReport() 
         {
             try
             {
                 List<HourlyReport> hourlyReport = this.HourlyReports.Where(r => r.HourTime.Date.AddDays(7) >= DateTime.Today).ToList();
                 return hourlyReport;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+        public List<Item>GetLikedItems(int userId)
+        {
+            try
+            {
+                List<LikedItem> likedItems = this.LikedItems.Where(l => l.SenderId==userId).Include(l => l.Item).Include(l => l.Item.User).ToList();
+                List<Item> items = new List<Item>();
+                foreach (var LikedItem in likedItems)
+                {
+                    items.Add(LikedItem.Item);
+                }
+                return items;
             }
             catch (Exception e)
             {
