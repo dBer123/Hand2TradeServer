@@ -51,6 +51,24 @@ namespace Hand2TradeServer.Controllers
                 return null;
             }
         }
+        [Route("LogOut")]
+        [HttpGet]
+        public bool LogOut()
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the contact user ID
+            if (user != null)
+            {
+                HttpContext.Session.SetObject("theUser", null);
+                return true;
+            }            
+            else
+            {
+
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
 
         [Route("GetLoggedUser")]
         [HttpGet]
@@ -128,27 +146,33 @@ namespace Hand2TradeServer.Controllers
         [HttpPost]
         public ItemDTO AddItem([FromBody] ItemDTO itm)
         {
-            if (itm != null)
+            User user1 = HttpContext.Session.GetObject<User>("theUser");
+            //Check if user logged in and its ID is the same as the contact user ID
+            if (user1 != null)
             {
-                User user = HttpContext.Session.GetObject<User>("theUser");
-                Item item = context.AddItem(itm.Price, itm.Desrciption, itm.ItemName, user);
-                if (item != null)
+                if (itm != null)
                 {
-                    ItemDTO itemDTO = new ItemDTO(item);
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                    return itemDTO;
+                    User user = HttpContext.Session.GetObject<User>("theUser");
+                    Item item = context.AddItem(itm.Price, itm.Desrciption, itm.ItemName, user);
+                    if (item != null)
+                    {
+                        ItemDTO itemDTO = new ItemDTO(item);
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                        return itemDTO;
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                        return null;
+                    }
                 }
                 else
                 {
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
                     return null;
                 }
             }
-            else
-            {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
-                return null;
-            }
+            return null;
 
         }
 

@@ -128,7 +128,16 @@ namespace Hand2TradeServerBL.Models
             try
             {
                 Item item = this.Items
-                            .Where(i => i.ItemId == id).FirstOrDefault();
+                            .Where(i => i.ItemId == id).Include(i =>i.LikedItems).Include(i => i.TradeChats).FirstOrDefault();
+               
+                foreach (var likedItem in item.LikedItems)
+                {
+                    this.Entry(likedItem).State = EntityState.Deleted;
+                }
+                foreach (var chat in item.TradeChats)
+                {
+                   bool found = Regect(chat.ChatId);
+                }
                 this.Entry(item).State = EntityState.Deleted;
                 this.SaveChanges();
                 return true;
@@ -334,17 +343,12 @@ namespace Hand2TradeServerBL.Models
             try
             {
 
-                User user = this.Users
-               .Where(u => u.UserId == senderid).Include(u => u.LikedItems)
+                LikedItem likedItem = this.LikedItems
+               .Where(l => l.ItemId == itemid)
                .FirstOrDefault();
                
-                foreach (LikedItem l in user.LikedItems)
-                {
-                    if (l.ItemId == itemid)
-                    {
-                        this.LikedItems.Remove(l);
-                    }
-                }              
+                this.Entry(likedItem).State = EntityState.Deleted;
+
                 this.SaveChanges();
                 return true;
             }
@@ -520,6 +524,7 @@ namespace Hand2TradeServerBL.Models
                 return false;
             }
         }
+
         public bool Regect(int chatId)
         {
             try
