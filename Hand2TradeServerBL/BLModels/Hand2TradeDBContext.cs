@@ -28,6 +28,7 @@ namespace Hand2TradeServerBL.Models
            
             return user;
         }
+        
         public User AddUser(string password, string username, string email, int coins, string adress, DateTime dDay, bool isAdmin, bool isBlocked, DateTime joinedDate)
         {
             User active = new User();
@@ -44,6 +45,14 @@ namespace Hand2TradeServerBL.Models
             try
             {
                 this.Users.Add(active);
+                DailyReport dailyReport = this.DailyReports
+            .Where(r => r.DayTime.Date == DateTime.Today)
+            .FirstOrDefault();
+                MonthlyReport monthlyReport = this.MonthlyReports
+               .Where(r => r.DateOfMonth.Date.AddMonths(13) > DateTime.Today)
+               .FirstOrDefault();
+                dailyReport.NewSubs++;
+                monthlyReport.NewSubs++;
                 this.SaveChanges();
             }
             catch 
@@ -268,6 +277,14 @@ namespace Hand2TradeServerBL.Models
                         ReportedUserId = reportedUserid
                     };
                     this.Reports.Add(report);
+                    DailyReport dailyReport = this.DailyReports
+               .Where(r => r.DayTime.Date == DateTime.Today)
+               .FirstOrDefault();
+                    MonthlyReport monthlyReport = this.MonthlyReports
+                   .Where(r => r.DateOfMonth.Date.AddMonths(13) > DateTime.Today)
+                   .FirstOrDefault();
+                    dailyReport.ReportsNum++;
+                    monthlyReport.ReportsNum++;
                 }
                 this.SaveChanges();
                 return true;
@@ -337,22 +354,7 @@ namespace Hand2TradeServerBL.Models
                 return false;
             }
         }
-        public bool MakeALoan(Loan loan, int userid)
-        {
-            try
-            {
-                User user = this.Users
-                  .Where(u => u.UserId == userid)
-                  .FirstOrDefault();
-                user.Loans.Add(loan);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return false;
-            }
-        }
+      
         public void AddMessage(string sender, string chatId, string message)
         {
             try
@@ -424,12 +426,13 @@ namespace Hand2TradeServerBL.Models
                 return null;
             }
         }
-        public List<HourlyReport> GetHourlyReport() 
+        public List<DailyReport> GetDailyReport()
         {
             try
             {
-                List<HourlyReport> hourlyReport = this.HourlyReports.Where(r => r.HourTime.Date.AddDays(7) >= DateTime.Today).ToList();
-                return hourlyReport;
+                DateTime minDate = DateTime.Today.AddDays(-7);
+                List<DailyReport> dailyReport = this.DailyReports.Where(r => r.DayTime >= minDate).ToList();
+                return dailyReport;
             }
             catch (Exception e)
             {
@@ -453,6 +456,88 @@ namespace Hand2TradeServerBL.Models
             {
                 Console.WriteLine(e);
                 return null;
+            }
+        }
+        
+        public void CreateMouthlyReport()
+        {
+            try
+            {
+                MonthlyReport m = new MonthlyReport();
+                MonthlyReports.Add(m);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+        public void CreateDailyReport()
+        {
+            try
+            {
+                DailyReport d = new DailyReport();
+                DailyReports.Add(d);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+        public bool Sell(int sellerId, int buyerId, int itemId)
+        {
+            try
+            {
+                User seller = this.Users
+                .Where(u => u.UserId == sellerId)
+                .FirstOrDefault();
+                User buyer = this.Users
+                .Where(u => u.UserId == buyerId)
+                .FirstOrDefault();
+                Item item = this.Items
+                .Where(i => i.ItemId == itemId).Include(i=>i.TradeChats)
+                .FirstOrDefault();
+                DailyReport dailyReport = this.DailyReports
+               .Where(r => r.DayTime.Date == DateTime.Today)
+               .FirstOrDefault();
+                MonthlyReport monthlyReport = this.MonthlyReports
+               .Where(r => r.DateOfMonth.Date.AddMonths(13) > DateTime.Today)
+               .FirstOrDefault();
+                dailyReport.ItemsDraded++;
+                monthlyReport.ItemsTraded++;
+                seller.Coins += item.Price;
+                buyer.Coins -= item.Price;
+                foreach (var chat in item.TradeChats)
+                {
+                    bool f=Regect(chat.ChatId);
+                }
+                this.Entry(item).State = EntityState.Deleted;
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+        public bool Regect(int chatId)
+        {
+            try
+            {
+                TradeChat chat = this.TradeChats
+                               .Where(c => c.ChatId == chatId).Include(c=>c.TextMessages).FirstOrDefault();
+                foreach (var textMessage in chat.TextMessages)
+                {
+                    this.Entry(textMessage).State = EntityState.Deleted;
+                }
+                this.Entry(chat).State = EntityState.Deleted;
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
             }
         }
     }

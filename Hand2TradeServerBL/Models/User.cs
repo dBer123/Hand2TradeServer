@@ -15,7 +15,6 @@ namespace Hand2TradeServerBL.Models
         {
             Items = new HashSet<Item>();
             LikedItems = new HashSet<LikedItem>();
-            Loans = new HashSet<Loan>();
             RatingRatedUsers = new HashSet<Rating>();
             RatingSenders = new HashSet<Rating>();
             ReportReportedUsers = new HashSet<Report>();
@@ -65,8 +64,6 @@ namespace Hand2TradeServerBL.Models
         public virtual ICollection<Item> Items { get; set; }
         [InverseProperty(nameof(LikedItem.Sender))]
         public virtual ICollection<LikedItem> LikedItems { get; set; }
-        [InverseProperty(nameof(Loan.Loaner))]
-        public virtual ICollection<Loan> Loans { get; set; }
         [InverseProperty(nameof(Rating.RatedUser))]
         public virtual ICollection<Rating> RatingRatedUsers { get; set; }
         [InverseProperty(nameof(Rating.Sender))]

@@ -8,21 +8,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hand2TradeServerBL.Models
 {
-    public partial class HourlyReport
+    public partial class DailyReport
     {
         [Key]
-        [Column("hourlyReportID")]
-        public int HourlyReportId { get; set; }
-        [Column("hourTime", TypeName = "datetime")]
-        public DateTime HourTime { get; set; }
+        [Column("DailyReportID")]
+        public int DailyReportId { get; set; }
+        [Column("dayTime", TypeName = "datetime")]
+        public DateTime DayTime { get; set; }
         [Column("newSubs")]
         public int NewSubs { get; set; }
         [Column("itemsDraded")]
         public int ItemsDraded { get; set; }
-        [Column("loansTaken")]
-        public int LoansTaken { get; set; }
-        [Column("loansDeptPaid")]
-        public int LoansDeptPaid { get; set; }
         [Column("reportsNum")]
         public int ReportsNum { get; set; }
     }

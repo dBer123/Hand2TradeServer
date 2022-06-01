@@ -19,10 +19,6 @@ namespace Hand2TradeServerBL.Models
         public int NewSubs { get; set; }
         [Column("itemsTraded")]
         public int ItemsTraded { get; set; }
-        [Column("loansTaken")]
-        public int LoansTaken { get; set; }
-        [Column("loansDeptPaid")]
-        public int LoansDeptPaid { get; set; }
         [Column("reportsNum")]
         public int ReportsNum { get; set; }
     }

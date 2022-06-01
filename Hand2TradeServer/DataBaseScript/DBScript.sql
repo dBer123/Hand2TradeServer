@@ -48,41 +48,22 @@ CREATE TABLE TextMessages(
 ) 
 
 
-CREATE TABLE Loans(
-    loanID INT IDENTITY Primary Key NOT NULL,
-    loanerID INT NOT NULL FOREIGN KEY REFERENCES Users(userID),
-    debt INT NOT NULL,
-    isDebtPaid Bit NOT NULL,
-    paymentDate DATETIME NOT NULL
-) 
 
-CREATE TABLE DailyRepors(
-    dailyReportReportID INT IDENTITY Primary Key NOT NULL,
-    dateOfDay DateTime NOT NULL,
-    newSubs INT NOT NULL,
-    itemsTraded INT NOT NULL,
-    loansTaken INT NOT NULL,
-    loansDeptPaid INT NOT NULL,
-    reportsNum INT NOT NULL
-)
+
 
 CREATE TABLE MonthlyReports(
     monthlyReportID INT IDENTITY Primary Key NOT NULL,
     dateOfMonth DateTime NOT NULL,
     newSubs INT NOT NULL,
     itemsTraded INT NOT NULL,
-    loansTaken INT NOT NULL,
-    loansDeptPaid INT NOT NULL,
     reportsNum INT NOT NULL
 )
 
-CREATE TABLE HourlyReports(
-    hourlyReportID INT IDENTITY Primary Key NOT NULL,
-    hourTime DateTime NOT NULL,
+CREATE TABLE DailyReports(
+    DailyReportID INT IDENTITY Primary Key NOT NULL,
+    dayTime DateTime NOT NULL,
     newSubs INT NOT NULL,
-    itemsDraded INT NOT NULL,
-    loansTaken INT NOT NULL,
-    loansDeptPaid INT NOT NULL,
+    itemsDraded INT NOT NULL,    
     reportsNum INT NOT NULL
 ) 
 

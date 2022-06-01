@@ -52,6 +52,25 @@ namespace Hand2TradeServer.Controllers
             }
         }
 
+        [Route("GetLoggedUser")]
+        [HttpGet]
+        public UserDTO GetLoggedUser()
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            //Check user name and password
+            if (user != null)
+            {
+                HttpContext.Session.SetObject("theUser",context.Login(user.Email,user.Passwrd));
+                User user2 = HttpContext.Session.GetObject<User>("theUser");
+                UserDTO u = new UserDTO(user2, true);
+                return u;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
         [Route("CheckEmail")]
         [HttpGet]
         public bool CheckEmail([FromQuery] string checkPass)
@@ -382,25 +401,7 @@ namespace Hand2TradeServer.Controllers
                 return false;
             }
         }
-        [Route("MakeALoan")]
-        [HttpPost]
-        public bool MakeALoan([FromBody] Loan loan)
-        {
-
-            User user = HttpContext.Session.GetObject<User>("theUser");
-            //Check if user logged in and its ID is the same as the userDTO user ID
-            if (user != null)
-            {
-                return true;
-
-            }
-            else
-            {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-                return false;
-            }
-        }
-
+       
         [Route("create-group")]
         [HttpPost]
         public string CreateGroup([FromBody] TradeChat chat)
@@ -462,46 +463,46 @@ namespace Hand2TradeServer.Controllers
             return null;
         }
 
-        //[Route("get-group")]
-        //[HttpGet]
-        //public TradeChat GetGroup([FromQuery] int chatId)
-        //{
-        //    UserDTO loggedInAccount = HttpContext.Session.GetObject<UserDTO>("account");
-
-        //    if (loggedInAccount != null)
-        //    {
-        //        try
-        //        {
-        //            TradeChat chat = context.GetGroup(chatId);
-
-        //            if (chat != null)
-        //            {                        
-        //                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-        //                return chat;
-        //            }
-
-        //            Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-        //            return null;
-        //        }
-        //        catch
-        //        {
-        //            Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-        //            return null;
-        //        }
-        //    }
-
-        //    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-        //    return null;
-        //}
-        [Route("GetHourlyReport")]
+        [Route("get-group")]
         [HttpGet]
-        public IEnumerable<HourlyReport> GetHourlyReport()
+        public TradeChat GetGroup([FromQuery] int chatId)
+        {
+            UserDTO loggedInAccount = HttpContext.Session.GetObject<UserDTO>("account");
+
+            if (loggedInAccount != null)
+            {
+                try
+                {
+                    TradeChat chat = context.GetGroup(chatId);
+
+                    if (chat != null)
+                    {
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                        return chat;
+                    }
+
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                    return null;
+                }
+                catch
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                    return null;
+                }
+            }
+
+            Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+            return null;
+        }
+        [Route("GetDailyReport")]
+        [HttpGet]
+        public IEnumerable<DailyReport> GetDailyReport()
         {
             User user = HttpContext.Session.GetObject<User>("theUser");
             //Check if user logged in and its ID is the same as the userDTO user ID
             if (user != null)
             {
-                return context.GetHourlyReport();
+                return context.GetDailyReport();
 
             }
             else
@@ -543,6 +544,50 @@ namespace Hand2TradeServer.Controllers
                 Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                 return null;
             }
+        }
+        [Route("SellItem")]
+        [HttpPost]
+        public bool SellItem([FromBody] TradeChatDTO chat)
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            if (user != null)
+            {
+                return context.Sell(chat.SellerId, chat.BuyerId, chat.ItemId);
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+        [Route("RegectTrade")]
+        [HttpPost]
+        public bool RegectTrade([FromBody] TradeChatDTO chat)
+        {
+            User user = HttpContext.Session.GetObject<User>("theUser");
+            if (user != null)
+            {
+                return context.Regect(chat.ChatId);
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+
+        [Route("CreateMouthlyReport")]
+        [HttpPost]
+        public void CreateMouthlyReport()
+        {
+            context.CreateMouthlyReport();
+        }
+
+        [Route("CreateHourlyReport")]
+        [HttpPost]
+        public void CreateHourlyReport()
+        {
+            context.CreateDailyReport();
         }
     }
 
