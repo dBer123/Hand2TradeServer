@@ -19,7 +19,6 @@ namespace Hand2TradeServer.DTO
         public bool IsBlocked { get; set; }
         public double SumRanks { get; set; }
         public int CountRanked { get; set; }
-        public DateTime JoinedDate { get; set; }
         public virtual ICollection<Item> Items { get; set; }
 
 
@@ -41,7 +40,6 @@ namespace Hand2TradeServer.DTO
             SumRanks = u.SumRanks;
             CountRanked = u.CountRanked;
             Items = u.Items;
-            JoinedDate = u.JoinedDate;
             if (isIncludeChats)
             {
                 

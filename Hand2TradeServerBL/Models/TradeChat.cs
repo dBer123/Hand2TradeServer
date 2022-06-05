@@ -25,9 +25,7 @@ namespace Hand2TradeServerBL.Models
         [Column("sellerID")]
         public int SellerId { get; set; }
         [Column("isTradeAgreed")]
-        public bool IsTradeAgreed { get; set; }
-
-        [ForeignKey(nameof(BuyerId))]
+      
         [InverseProperty(nameof(User.TradeChatBuyers))]
         public virtual User Buyer { get; set; }
         [ForeignKey(nameof(ItemId))]

@@ -29,7 +29,7 @@ namespace Hand2TradeServerBL.Models
             return user;
         }
         
-        public User AddUser(string password, string username, string email, int coins, string adress, DateTime dDay, bool isAdmin, bool isBlocked, DateTime joinedDate)
+        public User AddUser(string password, string username, string email, int coins, string adress, DateTime dDay, bool isAdmin, bool isBlocked)
         {
             User active = new User();
             active.Passwrd = password;
@@ -40,7 +40,6 @@ namespace Hand2TradeServerBL.Models
             active.BearthDate = dDay;
             active.IsAdmin = isAdmin;
             active.IsBlocked = isBlocked;  
-            active.JoinedDate = joinedDate;
 
             try
             {

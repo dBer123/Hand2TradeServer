@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Hand2TradeServerBL.Models.DailyReport">
+    <Position X="4.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIBAAAAAgAAIAAAQAAAAAAA=</HashCode>
+      <FileName>Models\DailyReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hand2TradeServerBL.Models.Hand2TradeDBContext">
+    <Position X="2.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAGEYCAAAQAQGAAAQwMAAAEkkQAAAAAkACAwAwAhBIQ=</HashCode>
+      <FileName>BLModels\Hand2TradeDBContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hand2TradeServerBL.Models.Item">
+    <Position X="15.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACFAAAAAQAAEAAAgAAAAAgAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Models\Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hand2TradeServerBL.Models.LikedItem">
+    <Position X="12.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAEAAABAAAAAAAAQAAIAAA=</HashCode>
+      <FileName>Models\LikedItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hand2TradeServerBL.Models.MonthlyReport">
+    <Position X="6.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIBAAAAAgAAAAAAQAgAAAAA=</HashCode>
+      <FileName>Models\MonthlyReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hand2TradeServerBL.Models.Rating">
+    <Position X="4.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAACAAIAAAAAAAAAAAAAAABAAAEAAAAAAAIAAA=</HashCode>
+      <FileName>Models\Rating.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hand2TradeServerBL.Models.Report">
+    <Position X="8.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAIIAAQ=</HashCode>
+      <FileName>Models\Report.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hand2TradeServerBL.Models.TextMessage">
+    <Position X="9.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAABAAgEAAAAAQAIAAQ=</HashCode>
+      <FileName>Models\TextMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hand2TradeServerBL.Models.TradeChat">
+    <Position X="6.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAQAAAEAQAAAQAAAAAAAQAACAQ=</HashCode>
+      <FileName>Models\TradeChat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hand2TradeServerBL.Models.User">
+    <Position X="18" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oAAAAAgAAWAAGAEAAAQACAgACAgAAgAAARAQASIAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

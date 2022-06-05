@@ -57,10 +57,7 @@ namespace Hand2TradeServerBL.Models
         public string Adress { get; set; }
         [Column("isBlocked")]
         public bool IsBlocked { get; set; }
-        [Column("joinedDate", TypeName = "datetime")]
-        public DateTime JoinedDate { get; set; }
-
-        [InverseProperty(nameof(Item.User))]
+        [Column("joinedDate", TypeName = "datetime")]       
         public virtual ICollection<Item> Items { get; set; }
         [InverseProperty(nameof(LikedItem.Sender))]
         public virtual ICollection<LikedItem> LikedItems { get; set; }

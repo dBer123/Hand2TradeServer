@@ -16,7 +16,6 @@ CREATE TABLE Users(
     bearthDate DATETIME NOT NULL,
     adress NVARCHAR(255) NOT NULL,
     isBlocked Bit NOT NULL,
-	joinedDate DATETIME NOT NULL,
 	CONSTRAINT UC_email UNIQUE(email)
 
 ) 
@@ -36,7 +35,6 @@ CREATE TABLE TradeChats(
     itemID INT NOT NULL FOREIGN KEY REFERENCES Items(itemID),
     buyerID INT NOT NULL FOREIGN KEY REFERENCES Users(userID),
     sellerID INT NOT NULL FOREIGN KEY REFERENCES Users(userID),
-    isTradeAgreed Bit NOT NULL
 ) 
 
 CREATE TABLE TextMessages(
@@ -85,7 +83,7 @@ CREATE TABLE LikedItems(
 	senderID INT NOT NULL FOREIGN KEY REFERENCES Users(userID)
 )
 
-INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, isBlocked, joinedDate)
-VALUES ('berdaniel04@gmail.com', 'daniel6839', 'danBer', '1', '500', '0', '0','0','2003-12-25','hailanot st. 7','0', '2020-12-25');
-INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, isBlocked, joinedDate)
-VALUES ('danielbe4@ramon.edum.org.il', 'daniel6839', 'danBer2', '1', '500', '0', '0','0','2003-12-25','hailanot st. 7','0', '2020-12-25');
+INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, isBlocked)
+VALUES ('berdaniel04@gmail.com', 'daniel6839', 'danBer', '1', '500', '0', '0','0','2003-12-25','hailanot st. 7','0');
+INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, isBlocked)
+VALUES ('danielbe4@ramon.edum.org.il', 'daniel6839', 'danBer2', '1', '500', '0', '0','0','2003-12-25','hailanot st. 7','0');

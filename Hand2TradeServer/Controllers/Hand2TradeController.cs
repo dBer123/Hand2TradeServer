@@ -111,7 +111,7 @@ namespace Hand2TradeServer.Controllers
         {
             User p = null;
 
-            p = context.AddUser(a.Passwrd, a.UserName, a.Email, a.Coins, a.Adress, a.BirthDate, a.IsAdmin, a.IsBlocked, a.JoinedDate);
+            p = context.AddUser(a.Passwrd, a.UserName, a.Email, a.Coins, a.Adress, a.BirthDate, a.IsAdmin, a.IsBlocked);
 
 
             if (p != null)
@@ -262,15 +262,15 @@ namespace Hand2TradeServer.Controllers
             }
         }
         [Route("DeleteItem")]
-        [HttpGet]
-        public bool DeleteItem([FromQuery] int id)
+        [HttpPost]
+        public bool DeleteItem([FromBody] ItemDTO itemDTO)
         {
             User user = HttpContext.Session.GetObject<User>("theUser");
             //Check if user logged in and its ID is the same as the userDTO user ID
             if (user != null)
             {
 
-                bool isDeleted = context.DeleteItem(id);
+                bool isDeleted = context.DeleteItem(itemDTO.ItemId);
                 return isDeleted;
             }
             else
@@ -323,14 +323,14 @@ namespace Hand2TradeServer.Controllers
         }
 
         [Route("Promote")]
-        [HttpGet]
-        public bool Promote([FromQuery] int userId)
+        [HttpPost]
+        public bool Promote([FromBody] UserDTO u)
         {
             User user = HttpContext.Session.GetObject<User>("theUser");
             //Check if user logged in and its ID is the same as the userDTO user ID
             if (user != null)
             {
-                return context.Promote(userId);
+                return context.Promote(u.UserId);
 
             }
             else
@@ -340,14 +340,14 @@ namespace Hand2TradeServer.Controllers
             }
         }
         [Route("Block")]
-        [HttpGet]
-        public bool Block([FromQuery] int userId)
+        [HttpPost]
+        public bool Block([FromBody] UserDTO u)
         {
             User user = HttpContext.Session.GetObject<User>("theUser");
             //Check if user logged in and its ID is the same as the userDTO user ID
             if (user != null)
             {
-                return context.Block(userId);
+                return context.Block(u.UserId);
             }
             else
             {
@@ -357,15 +357,15 @@ namespace Hand2TradeServer.Controllers
         }
 
         [Route("Report")]
-        [HttpGet]
-        public bool Report([FromQuery] int reportedID)
+        [HttpPost]
+        public bool Report([FromBody] UserDTO u)
         {
 
             User user = HttpContext.Session.GetObject<User>("theUser");
             //Check if user logged in and its ID is the same as the userDTO user ID
             if (user != null)
             {
-                return context.Report(user.UserId, reportedID);
+                return context.Report(user.UserId, u.UserId);
             }
             else
             {
@@ -375,15 +375,15 @@ namespace Hand2TradeServer.Controllers
         }
 
         [Route("Rate")]
-        [HttpGet]
-        public bool Rate([FromQuery] int ratedUserID, double rate)
+        [HttpPost]
+        public bool Rate([FromBody] Rating rating)
         {
 
             User user = HttpContext.Session.GetObject<User>("theUser");
             //Check if user logged in and its ID is the same as the userDTO user ID
             if (user != null)
             {
-                return context.Rate(user.UserId, ratedUserID, rate);
+                return context.Rate(user.UserId, rating.RatedUserId, rating.Rate);
             }
             else
             {
@@ -392,15 +392,15 @@ namespace Hand2TradeServer.Controllers
             }
         }
         [Route("Like")]
-        [HttpGet]
-        public bool Like([FromQuery] int itemID)
+        [HttpPost]
+        public bool Like([FromBody] ItemDTO i)
         {
 
             User user = HttpContext.Session.GetObject<User>("theUser");
             //Check if user logged in and its ID is the same as the userDTO user ID
             if (user != null)
             {
-                return context.Like(user.UserId, itemID);
+                return context.Like(user.UserId, i.ItemId);
             }
             else
             {
@@ -409,15 +409,15 @@ namespace Hand2TradeServer.Controllers
             }
         }
         [Route("UnLike")]
-        [HttpGet]
-        public bool UnLike([FromQuery] int itemID)
+        [HttpPost]
+        public bool UnLike([FromBody] ItemDTO i)
         {
 
             User user = HttpContext.Session.GetObject<User>("theUser");
             //Check if user logged in and its ID is the same as the userDTO user ID
             if (user != null)
             {
-                return context.UnLike(user.UserId, itemID);
+                return context.UnLike(user.UserId, i.ItemId);
             }
             else
             {
@@ -487,37 +487,37 @@ namespace Hand2TradeServer.Controllers
             return null;
         }
 
-        [Route("get-group")]
-        [HttpGet]
-        public TradeChat GetGroup([FromQuery] int chatId)
-        {
-            UserDTO loggedInAccount = HttpContext.Session.GetObject<UserDTO>("account");
+        //[Route("get-group")]
+        //[HttpGet]
+        //public TradeChat GetGroup([FromQuery] int chatId)
+        //{
+        //    UserDTO loggedInAccount = HttpContext.Session.GetObject<UserDTO>("account");
 
-            if (loggedInAccount != null)
-            {
-                try
-                {
-                    TradeChat chat = context.GetGroup(chatId);
+        //    if (loggedInAccount != null)
+        //    {
+        //        try
+        //        {
+        //            TradeChat chat = context.GetGroup(chatId);
 
-                    if (chat != null)
-                    {
-                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                        return chat;
-                    }
+        //            if (chat != null)
+        //            {
+        //                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+        //                return chat;
+        //            }
 
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-                    return null;
-                }
-                catch
-                {
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-                    return null;
-                }
-            }
+        //            Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+        //            return null;
+        //        }
+        //        catch
+        //        {
+        //            Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+        //            return null;
+        //        }
+        //    }
 
-            Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-            return null;
-        }
+        //    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+        //    return null;
+        //}
         [Route("GetDailyReport")]
         [HttpGet]
         public IEnumerable<DailyReport> GetDailyReport()
@@ -607,9 +607,9 @@ namespace Hand2TradeServer.Controllers
             context.CreateMouthlyReport();
         }
 
-        [Route("CreateHourlyReport")]
+        [Route("CreateDailyReport")]
         [HttpPost]
-        public void CreateHourlyReport()
+        public void CreateDailyReport()
         {
             context.CreateDailyReport();
         }
