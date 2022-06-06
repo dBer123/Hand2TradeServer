@@ -487,37 +487,7 @@ namespace Hand2TradeServer.Controllers
             return null;
         }
 
-        //[Route("get-group")]
-        //[HttpGet]
-        //public TradeChat GetGroup([FromQuery] int chatId)
-        //{
-        //    UserDTO loggedInAccount = HttpContext.Session.GetObject<UserDTO>("account");
 
-        //    if (loggedInAccount != null)
-        //    {
-        //        try
-        //        {
-        //            TradeChat chat = context.GetGroup(chatId);
-
-        //            if (chat != null)
-        //            {
-        //                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-        //                return chat;
-        //            }
-
-        //            Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-        //            return null;
-        //        }
-        //        catch
-        //        {
-        //            Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-        //            return null;
-        //        }
-        //    }
-
-        //    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-        //    return null;
-        //}
         [Route("GetDailyReport")]
         [HttpGet]
         public IEnumerable<DailyReport> GetDailyReport()
@@ -600,11 +570,11 @@ namespace Hand2TradeServer.Controllers
             }
         }
 
-        [Route("CreateMouthlyReport")]
+        [Route("CreateMonthlyReport")]
         [HttpPost]
-        public void CreateMouthlyReport()
+        public void CreateMonthlyReport()
         {
-            context.CreateMouthlyReport();
+            context.CreateMonthlyReport();
         }
 
         [Route("CreateDailyReport")]

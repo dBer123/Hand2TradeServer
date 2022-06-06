@@ -390,19 +390,7 @@ namespace Hand2TradeServerBL.Models
                 Console.WriteLine(e);
                 return null;
             }
-        }
-        public TradeChat GetGroup(int chatId)
-        {
-            try
-            {
-                return this.TradeChats.Where(c => c.ChatId == chatId).Include(c => c.Buyer).Include(c => c.Seller).Include(c => c.Item).FirstOrDefault();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return null;
-            }
-        }
+        }     
         public List<TradeChat> GetGroups(int accountID)
         {
             try
@@ -462,7 +450,7 @@ namespace Hand2TradeServerBL.Models
             }
         }
         
-        public void CreateMouthlyReport()
+        public void CreateMonthlyReport()
         {
             try
             {
