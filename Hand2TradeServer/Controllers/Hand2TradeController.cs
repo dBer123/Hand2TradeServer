@@ -123,9 +123,9 @@ namespace Hand2TradeServer.Controllers
                 {
                     EmailSender.SendEmail("Validate Sign Up", $"Validation email code-{pass}", a.Email, "New User", "hand2trade1@gmail.com", "hand2trade", "daniel6839", "smtp.gmail.com");
                 }
-                catch
+                catch(Exception e)
                 {
-
+                    Console.WriteLine(e);
                 }
                 UserDTO uDTO = new UserDTO(p ,true);
                 HttpContext.Session.SetObject("user", uDTO);
