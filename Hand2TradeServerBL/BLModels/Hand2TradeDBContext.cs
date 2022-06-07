@@ -454,8 +454,16 @@ namespace Hand2TradeServerBL.Models
         {
             try
             {
-                MonthlyReport m = new MonthlyReport();
+                MonthlyReport m = new MonthlyReport()
+                {
+                    NewSubs = 0,
+                    ItemsTraded = 0,
+                    DateOfMonth = DateTime.Today,
+                    ReportsNum = 0
+                };
                 MonthlyReports.Add(m);
+                this.SaveChanges();
+
             }
             catch (Exception e)
             {
@@ -466,8 +474,15 @@ namespace Hand2TradeServerBL.Models
         {
             try
             {
-                DailyReport d = new DailyReport();
+                DailyReport d = new DailyReport()
+                {
+                    NewSubs=0,
+                    ItemsDraded=0,
+                    DayTime=DateTime.Today,
+                    ReportsNum=0
+                };
                 DailyReports.Add(d);
+                this.SaveChanges();
             }
             catch (Exception e)
             {

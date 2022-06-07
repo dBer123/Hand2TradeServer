@@ -193,6 +193,7 @@ namespace Hand2TradeServer.Controllers
                 try
                 {
                     var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", file.FileName);
+                    
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
@@ -571,14 +572,14 @@ namespace Hand2TradeServer.Controllers
         }
 
         [Route("CreateMonthlyReport")]
-        [HttpPost]
+        [HttpGet]
         public void CreateMonthlyReport()
         {
             context.CreateMonthlyReport();
         }
 
         [Route("CreateDailyReport")]
-        [HttpPost]
+        [HttpGet]
         public void CreateDailyReport()
         {
             context.CreateDailyReport();
