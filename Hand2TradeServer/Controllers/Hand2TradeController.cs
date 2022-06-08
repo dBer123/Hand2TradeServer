@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Hand2TradeServerBL.Models;
 using System.IO;
 using Hand2TradeServer.DTO;
-using Hand2TradeServer.Sevices;
+using SendGridLib;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
@@ -121,7 +121,7 @@ namespace Hand2TradeServer.Controllers
                 int pass = random.Next(10000, 100000);
                 try
                 {
-                    EmailSender.SendEmail("Validate Sign Up", $"Validation email code-{pass}", a.Email, "New User", "hand2trade1@gmail.com", "hand2trade", "daniel6839", "smtp.gmail.com");
+                    MailSender.SendEmail("Hand2Trade", a.Email, a.UserName,"Validation Code", $"Validation email code-{pass}", "");
                 }
                 catch(Exception e)
                 {

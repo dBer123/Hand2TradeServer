@@ -85,5 +85,43 @@ CREATE TABLE LikedItems(
 
 INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, isBlocked)
 VALUES ('berdaniel04@gmail.com', 'daniel6839', 'danBer', '1', '500', '0', '0','0','2003-12-25','hailanot st. 7','0');
-INSERT INTO Users (email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, isBlocked)
+INSERT INTO  Users(email, passwrd, userName, isAdmin, coins, reports, sumRanks, countRanked, bearthDate, adress, isBlocked)
 VALUES ('danielbe4@ramon.edum.org.il', 'daniel6839', 'danBer2', '1', '500', '0', '0','0','2003-12-25','hailanot st. 7','0');
+INSERT INTO DailyReports (dayTime, newSubs, reportsNum, itemsDraded)
+VALUES ('2022-6-8', '3', '3', '1');
+INSERT INTO DailyReports (dayTime, newSubs, reportsNum, itemsDraded)
+VALUES ('2022-6-7', '2', '2', '2');
+INSERT INTO DailyReports (dayTime, newSubs, reportsNum, itemsDraded)
+VALUES ('2022-6-6', '5', '6', '4');
+INSERT INTO DailyReports (dayTime, newSubs, reportsNum, itemsDraded)
+VALUES ('2022-6-5', '9', '7', '3');
+INSERT INTO DailyReports (dayTime, newSubs, reportsNum, itemsDraded)
+VALUES ('2022-6-4', '5', '6', '1');
+INSERT INTO DailyReports (dayTime, newSubs, reportsNum, itemsDraded)
+VALUES ('2022-6-3', '4', '3', '0');
+INSERT INTO DailyReports (dayTime, newSubs, reportsNum, itemsDraded)
+VALUES ('2022-6-2', '3', '1', '2');
+INSERT INTO MonthlyReports (dateOfMonth, newSubs, reportsNum, itemsTraded)
+VALUES ('2022-6-1', '33', '31', '19');
+INSERT INTO MonthlyReports (dateOfMonth, newSubs, reportsNum, itemsTraded)
+VALUES ('2022-5-1', '22', '22', '40');
+INSERT INTO MonthlyReports (dateOfMonth, newSubs, reportsNum, itemsTraded)
+VALUES ('2022-4-1', '41', '44', '18');
+INSERT INTO MonthlyReports (dateOfMonth, newSubs, reportsNum, itemsTraded)
+VALUES ('2022-3-1', '44', '20', '55');
+INSERT INTO MonthlyReports (dateOfMonth, newSubs, reportsNum, itemsTraded)
+VALUES ('2022-2-1', '33', '31', '19');
+INSERT INTO MonthlyReports (dateOfMonth, newSubs, reportsNum, itemsTraded)
+VALUES ('2022-1-1', '61', '27', '16');
+INSERT INTO MonthlyReports (dateOfMonth, newSubs, reportsNum, itemsTraded)
+VALUES ('2021-12-1', '26', '14', '42');
+INSERT INTO MonthlyReports (dateOfMonth, newSubs, reportsNum, itemsTraded)
+VALUES ('2021-11-1', '23', '15', '20');
+INSERT INTO MonthlyReports (dateOfMonth, newSubs, reportsNum, itemsTraded)
+VALUES ('2021-10-1', '36', '26', '32');
+INSERT INTO MonthlyReports (dateOfMonth, newSubs, reportsNum, itemsTraded)
+VALUES ('2021-9-1', '24', '24', '24');
+INSERT INTO MonthlyReports (dateOfMonth, newSubs, reportsNum, itemsTraded)
+VALUES ('2021-8-1', '23', '19', '20');
+INSERT INTO MonthlyReports (dateOfMonth, newSubs, reportsNum, itemsTraded)
+VALUES ('2021-7-1', '13', '16', '9');
