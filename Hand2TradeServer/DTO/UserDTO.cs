@@ -19,7 +19,7 @@ namespace Hand2TradeServer.DTO
         public bool IsBlocked { get; set; }
         public double SumRanks { get; set; }
         public int CountRanked { get; set; }
-        public virtual ICollection<Item> Items { get; set; }
+        public virtual List<ItemDTO> Items { get; set; }
 
 
         public UserDTO() { }
@@ -39,7 +39,12 @@ namespace Hand2TradeServer.DTO
             IsBlocked = u.IsBlocked;
             SumRanks = u.SumRanks;
             CountRanked = u.CountRanked;
-            Items = u.Items;
+            Items = new List<ItemDTO>();
+            foreach (Item item in u.Items)
+            {
+                Items.Add(new ItemDTO(item));
+            }
+            
             if (isIncludeChats)
             {
                 
